@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/idle-anno-redux/static/css/main.1d3f4278.chunk.css",
-    "main.js": "/idle-anno-redux/static/js/main.0a277fed.chunk.js",
-    "main.js.map": "/idle-anno-redux/static/js/main.0a277fed.chunk.js.map",
+    "main.js": "/idle-anno-redux/static/js/main.581f37cf.chunk.js",
+    "main.js.map": "/idle-anno-redux/static/js/main.581f37cf.chunk.js.map",
     "runtime-main.js": "/idle-anno-redux/static/js/runtime-main.00d145f4.js",
     "runtime-main.js.map": "/idle-anno-redux/static/js/runtime-main.00d145f4.js.map",
     "static/js/2.ef2f719e.chunk.js": "/idle-anno-redux/static/js/2.ef2f719e.chunk.js",
     "static/js/2.ef2f719e.chunk.js.map": "/idle-anno-redux/static/js/2.ef2f719e.chunk.js.map",
     "index.html": "/idle-anno-redux/index.html",
-    "precache-manifest.8271f0cb2c9a0e24004e6d5ed33eaadb.js": "/idle-anno-redux/precache-manifest.8271f0cb2c9a0e24004e6d5ed33eaadb.js",
+    "precache-manifest.c29e470ed844d93657b2e4a566331bc3.js": "/idle-anno-redux/precache-manifest.c29e470ed844d93657b2e4a566331bc3.js",
     "service-worker.js": "/idle-anno-redux/service-worker.js",
     "static/css/main.1d3f4278.chunk.css.map": "/idle-anno-redux/static/css/main.1d3f4278.chunk.css.map"
   },
@@ -16,6 +16,6 @@
     "static/js/runtime-main.00d145f4.js",
     "static/js/2.ef2f719e.chunk.js",
     "static/css/main.1d3f4278.chunk.css",
-    "static/js/main.0a277fed.chunk.js"
+    "static/js/main.581f37cf.chunk.js"
   ]
 }

@@ -20,8 +20,8 @@ export default function(state = {}, action) {
       newState.population = population;
 
       for (const [popType, popOriginal] of Object.entries(state.population)) {
-
         const pop = Object.assign({}, popOriginal);
+        pop.consumeInfo = null;
         let currentHappiness = 0;
         if (popOriginal.owned !== 0) {
           for (const [product, consumeInfo] of Object.entries(PopulationDefinitions[popType].consumes)) {
@@ -31,7 +31,9 @@ export default function(state = {}, action) {
             if (amenities[product]) {
               if (amenities[product] < consumed) {
                 pctSatisfied = amenities[product] / consumed;
-                pop.consumeInfo = 'Short on ' + product;
+                if (!pop.consumeInfo) {
+                  pop.consumeInfo = 'Need ' + product;
+                }
               }
               amenities[product] -= consumed;
               if (amenities[product] < 0) {
@@ -43,7 +45,9 @@ export default function(state = {}, action) {
 
               if (resource.owned < consumed) {
                 pctSatisfied = resource.owned / consumed
-                pop.consumeInfo = 'Short on ' + product;
+                if (!pop.consumeInfo) {
+                  pop.consumeInfo = 'Need ' + product;
+                }
               }
               resource.owned -= consumed;
               if (resource.owned < 0) {
@@ -51,6 +55,9 @@ export default function(state = {}, action) {
               }
             } else {
               pctSatisfied = 0;
+              if (!pop.consumeInfo) {
+                pop.consumeInfo = 'Need ' + product;
+              }
             }
 
             currentHappiness += consumeInfo.weight * pctSatisfied;

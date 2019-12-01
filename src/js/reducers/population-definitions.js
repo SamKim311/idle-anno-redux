@@ -3,16 +3,16 @@ const PopulationDefinitions = {
     name: 'Peasant',
     taxRate: 0.8,
     consumes: {
+      community: {
+        quantity: 1,
+        weight: 25
+      },
       fish: {
         quantity: 1,
         weight: 25
       },
       cider: {
         quantity: 0.44,
-        weight: 25
-      },
-      community: {
-        quantity: 1,
         weight: 25
       },
       faith: {

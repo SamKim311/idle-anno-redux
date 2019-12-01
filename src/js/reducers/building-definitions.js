@@ -21,7 +21,7 @@ const BuildingDefinitions = {
     description: 'A basic building for villagers to worship',
     category: BUILDING_CATEGORY.AMENITY,
     produces: {
-      faith: 1.5
+      faith: 2
     },
     upkeep: 15
   },

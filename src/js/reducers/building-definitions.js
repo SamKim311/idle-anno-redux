@@ -57,7 +57,7 @@ const BuildingDefinitions = {
     produces: {
       apple: 1
     },
-    produceTime: 80,
+    produceTime: 100,
     upkeep: 0
   },
   ciderfarm: {

@@ -15,11 +15,17 @@ const buildingStatus = {
 const initialProducerState = {
   status: buildingStatus.AWAITING_RESOURCES,
   progress: 0,
-  efficiency: 0,
+  efficiency: 1,
+  efficiencyTimer: 0,
+  efficiencySupplied: false,
   inbox: {},
   outbox: {}
 }
 
+const EFFICIENCY_FACTOR = 1 / 100.0;
+const EFFICIENCY_TIMER = 2;
+const EFFICIENCY_MINIMUM = 1;
+const BASE_EFFICIENCY_MAXIMUM = 100;
 export const BASE_IN_OUT_BOX_CAPACITY = 5;
 
 export default function(buildings = {}, action) {
@@ -83,17 +89,34 @@ function doProductionTick(building, timeIntervalS) {
 
   if (!canAfford(buildingCopy)) {
     buildingCopy.status = buildingStatus.AWAITING_RESOURCES;
+    if (buildingCopy.efficiencySupplied) {
+      buildingCopy.efficiencySupplied = false;
+      buildingCopy.efficiencyTimer = 0;
+    }
+    buildingCopy = progressEfficiency(buildingCopy, timeIntervalS);
+
     return buildingCopy;
   }
 
   if (!outboxHasRoom(buildingCopy)) {
     buildingCopy.status = buildingStatus.OUTBOX_FULL;
+    if (buildingCopy.efficiencySupplied) {
+      buildingCopy.efficiencySupplied = false;
+      buildingCopy.efficiencyTimer = 0;
+    }
+    buildingCopy = progressEfficiency(buildingCopy, timeIntervalS);
+
     return buildingCopy;
   }
 
   buildingCopy.status = buildingStatus.WORKING;
+  if (!buildingCopy.efficiencySupplied) {
+    buildingCopy.efficiencySupplied = true;
+    buildingCopy.efficiencyTimer = 0;
+  }
+  buildingCopy = progressEfficiency(buildingCopy, timeIntervalS);
 
-  buildingCopy.progress += timeIntervalS;
+  buildingCopy.progress += timeIntervalS * buildingCopy.efficiency * EFFICIENCY_FACTOR;
   if (buildingCopy.progress > buildingCopy.produceTime) {
     buildingCopy.progress -= buildingCopy.produceTime;
     let inboxCopy = Object.assign({}, buildingCopy.inbox);
@@ -131,4 +154,19 @@ function outboxHasRoom(building) {
     }
   }
   return true;
+}
+
+function progressEfficiency(building, timeIntervalS) {
+  building.efficiencyTimer += timeIntervalS;
+  if (building.efficiencyTimer > EFFICIENCY_TIMER) {
+    building.efficiencyTimer -= EFFICIENCY_TIMER;
+    if (building.efficiencySupplied) {
+      // efficiency going up
+      building.efficiency = Math.min(BASE_EFFICIENCY_MAXIMUM, building.efficiency + 1);
+    } else {
+      // efficiency going down
+      building.efficiency = Math.max(EFFICIENCY_MINIMUM, building.efficiency - 1);
+    }
+  }
+  return building;
 }

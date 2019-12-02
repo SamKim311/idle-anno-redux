@@ -41,6 +41,7 @@ const Building = (props) => {
       <div className='building-header'><h4>{building.name}</h4></div>
       <div className='status'>{building.status}</div>
       <div>{building.progress.toFixed(1)} / {building.produceTime}</div>
+      <div>Efficiency: {building.efficiency}</div>
       <div className='inbox'>Inbox: {JSON.stringify(building.inbox)}</div>
       <div className='outbox'>Outbox: {JSON.stringify(building.outbox)}</div>
       <button onClick={() => props.destroyFunc(building)}>Destroy</button>

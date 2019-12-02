@@ -2,6 +2,7 @@ import { ACTIONS } from '../actions/warehouse';
 import { ACTIONS as gameActions } from '../actions/game';
 import { ACTIONS as constructionActions } from '../actions/construction';
 import { ACTIONS as housingActions } from '../actions/housing';
+import { ACTIONS as tradeActions } from '../actions/trade';
 import BuildingDefinitions from './building-definitions';
 
 const resourceDecorations = {
@@ -43,6 +44,34 @@ export default function(warehouse = {}, action) {
       warehouseCopy.totalCapacity += warehouseToBuild.capacity;
 
       return warehouseCopy;
+    }
+    case tradeActions.BUY_GOODS: {
+      const good = payload.product;
+      const amount = payload.amount;
+      const atPrice = payload.atPrice;
+
+      const gold = {...warehouse.resources.gold};
+      gold.owned -= amount * atPrice;
+
+      const goodBought = {...warehouse.resources[good]};
+      goodBought.owned += amount;
+
+      const resources = {...warehouse.resources, gold: gold, [good]: goodBought};
+      return {...warehouse, resources: resources};
+    }
+    case tradeActions.SELL_GOODS: {
+      const good = payload.product;
+      const amount = payload.amount;
+      const atPrice = payload.atPrice;
+
+      const gold = {...warehouse.resources.gold};
+      gold.owned += amount * atPrice;
+
+      const goodBought = {...warehouse.resources[good]};
+      goodBought.owned -= amount;
+
+      const resources = {...warehouse.resources, gold: gold, [good]: goodBought};
+      return {...warehouse, resources: resources};
     }
     default:
       return warehouse;

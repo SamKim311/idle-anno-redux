@@ -11,6 +11,7 @@ import BuildingPanel from './components/BuildingPanel';
 import PopulationPanel from './components/PopulationPanel';
 import HousingPanel from './components/HousingPanel';
 import SaveLoad from './components/SaveLoad';
+import TradePanel from './components/TradePanel';
 
 const MS_TO_S = 1/1000.0;
 
@@ -32,6 +33,7 @@ function Game() {
       <SaveLoad></SaveLoad>
       <TimeFactor></TimeFactor>
       <ResourcePanel></ResourcePanel>
+      <TradePanel></TradePanel>
       <PopulationPanel></PopulationPanel>
       <HousingPanel></HousingPanel>
       <CourierMonitor></CourierMonitor>

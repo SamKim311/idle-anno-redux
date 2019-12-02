@@ -3,6 +3,7 @@ import { init } from '../../js/actions/game';
 import { constructBuilding, destroyBuilding } from '../../js/actions/construction';
 import { buildHouse, ascendHouse } from '../../js/actions/housing';
 import { buildWarehouse } from '../../js/actions/warehouse';
+import { buyGood, sellGood } from '../../js/actions/trade';
 
 describe('warehouse reducer', () => {
   it('should return the initial state', () => {
@@ -119,5 +120,51 @@ describe('warehouse reducer', () => {
       }
     };
     expect(reducer(testState, buildWarehouse(testWarehouse)).totalCapacity).toEqual(540);
+  });
+
+  it('should deduct gold on trade purchase', () => {
+    const testState = {
+      resources: {
+        gold: {owned: 100}
+      }
+    };
+    expect(reducer(testState, buyGood('tool', 5, 2)).resources.gold).toEqual({
+      owned: 90
+    });
+  });
+
+  it('should increase good on trade purchase', () => {
+    const testState = {
+      resources: {
+        gold: {owned: 100},
+        tool: {owned: 0}
+      }
+    };
+    expect(reducer(testState, buyGood('tool', 5, 2)).resources.tool).toEqual({
+     owned: 5
+    });
+  });
+
+  it('should increase gold on trade sale', () => {
+    const testState = {
+      resources: {
+        gold: {owned: 100}
+      }
+    };
+    expect(reducer(testState, sellGood('tool', 5, 2)).resources.gold).toEqual({
+      owned: 110
+    });
+  });
+
+  it('should decrease good on trade sale', () => {
+    const testState = {
+      resources: {
+        gold: {owned: 100},
+        tool: {owned: 15}
+      }
+    };
+    expect(reducer(testState, sellGood('tool', 5, 2)).resources.tool).toEqual({
+     owned: 10
+    });
   });
 });

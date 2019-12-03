@@ -9,7 +9,10 @@ export const filterUnlocked = (collectionObject) => {
 
 export const setAffordable = (buyable, resources) => {
   for (let [resource, amount] of Object.entries(buyable.cost)) {
-    if (resources[resource].owned < amount) {
+    if (!resources[resource]) {
+      // thing costs a resource the player hasn't unlocked
+      return {...buyable, canAfford: false};
+    } else if (resources[resource].owned < amount) {
       return Object.assign({}, buyable, {canAfford: false});
     }
   }

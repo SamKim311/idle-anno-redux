@@ -45,6 +45,23 @@ export default function(warehouse = {}, action) {
 
       return warehouseCopy;
     }
+    case ACTIONS.UPDGRADE_WAREHOUSE: {
+      const warehouseCopy = Object.assign({}, warehouse);
+      const currentWarehouse = BuildingDefinitions[warehouse.type];
+      const nextWarehouse = BuildingDefinitions[currentWarehouse.upgradesTo];
+      if (!nextWarehouse) {
+        return warehouse;
+      }
+
+      const cost = currentWarehouse.upgradeCost;
+      const newResources = deductCost(warehouseCopy.resources, cost);
+      warehouseCopy.resources = newResources;
+
+      warehouseCopy.totalCapacity += nextWarehouse.capacity;
+      warehouseCopy.type = BuildingDefinitions[warehouse.type].upgradesTo;
+
+      return warehouseCopy;
+    }
     case tradeActions.BUY_GOODS: {
       const good = payload.product;
       const amount = payload.amount;

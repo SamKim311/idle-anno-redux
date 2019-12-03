@@ -39,6 +39,12 @@ export default function(state = {}, action) {
       const courierObjCopy = Object.assign({}, couriers);
       courierObjCopy.couriers = courierArrayCopy;
       return Object.assign({}, state, {couriers: courierObjCopy});
+    case warehouseActions.UPDGRADE_WAREHOUSE:
+      // "cheat" and modify the payload a bit so we can reuse the code for the below case
+      const nextWarehouse = BuildingDefinitions[payload.toUpgrade].upgradesTo;
+      payload.toConstruct = {
+        id: nextWarehouse
+      };
     case warehouseActions.BUILD_WAREHOUSE: {
       const builtWarehouse = BuildingDefinitions[payload.toConstruct.id];
       const addedCouriers = builtWarehouse.couriers;

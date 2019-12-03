@@ -1,26 +1,46 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { filterUnlocked } from '../selectors';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { upgradeWarehouse } from '../actions/warehouse';
+import { filterUnlocked, setAffordable } from '../selectors';
+import Buildings from '../reducers/building-definitions';
 import ResourceDefinitions from '../reducers/resource-definitions';
 
 import '../../style/resource.css';
 
-const mapStateToProps = (state) => { return {resources: filterUnlocked(state.warehouse.resources),
-                                             max: state.warehouse.totalCapacity}};
+const ResourcePanel = () => {
+  const warehouseType = useSelector(state => state.warehouse.type);
+  const resources = useSelector(state => filterUnlocked(state.warehouse.resources), shallowEqual);
+  const max = useSelector(state => state.warehouse.totalCapacity);
+  const warehouseInfo = Buildings[warehouseType];
+  const dispatch = useDispatch();
 
-const ResourcePanel = ({resources, max}) => {
+  const upgradeWarehouseFn = () => {
+    dispatch(upgradeWarehouse(warehouseType));
+  }
+
+  let upgradeButton = null;
+  if (warehouseInfo.upgradesTo && setAffordable({cost: warehouseInfo.upgradeCost}, resources).canAfford) {
+    upgradeButton = (
+      <button onClick={upgradeWarehouseFn}>Upgrade</button>
+    );
+  }
+
   return (
     <div className='resource-panel'>
-      {Object.keys(resources).map((item, key) => {
-          const resourceName = ResourceDefinitions[item].name;
-          if (item !== 'gold') {
-            return <div key={item}>{resourceName}: {resources[item].owned.toFixed(1)} / {max}</div>;
-          } else {
-            return <div key={item}>{resourceName}: {resources[item].owned.toFixed(1)}</div>;
-          }
-      })}
+      <h4>{warehouseInfo.name}</h4>
+      {upgradeButton}
+      <div className='resource-list'>
+        {Object.keys(resources).map((item, key) => {
+            const resourceName = ResourceDefinitions[item].name;
+            if (item !== 'gold') {
+              return <div key={item}>{resourceName}: {resources[item].owned.toFixed(1)} / {max}</div>;
+            } else {
+              return <div key={item}>{resourceName}: {resources[item].owned.toFixed(1)}</div>;
+            }
+        })}
+      </div>
     </div>
   );
 };
 
-export default connect(mapStateToProps)(ResourcePanel);
+export default ResourcePanel;

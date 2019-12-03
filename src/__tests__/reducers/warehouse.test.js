@@ -2,8 +2,9 @@ import reducer from '../../js/reducers/warehouse';
 import { init } from '../../js/actions/game';
 import { constructBuilding, destroyBuilding } from '../../js/actions/construction';
 import { buildHouse, ascendHouse } from '../../js/actions/housing';
-import { buildWarehouse } from '../../js/actions/warehouse';
+import { buildWarehouse, upgradeWarehouse } from '../../js/actions/warehouse';
 import { buyGood, sellGood } from '../../js/actions/trade';
+import Buildings from '../../js/reducers/building-definitions';
 
 describe('warehouse reducer', () => {
   it('should return the initial state', () => {
@@ -166,5 +167,74 @@ describe('warehouse reducer', () => {
     expect(reducer(testState, sellGood('tool', 5, 2)).resources.tool).toEqual({
      owned: 10
     });
+  });
+
+  const testBaseWarehouse = {
+    upgradesTo: 'testupgradedwarehouse',
+    upgradeCost: {
+      gold: 100,
+      wood: 1
+    },
+    capacity: 40
+  };
+  const testUpgradedWarehouse = {
+    capacity: 10
+  }
+  it('should deduct cost on warehouse upgrade', () => {
+    const testState = {
+      type: 'testwarehouse',
+      resources: {
+        gold: {owned: 300},
+        wood: {owned: 40}
+      }
+    };
+    Buildings['testwarehouse'] = testBaseWarehouse;
+    Buildings['testupgradedwarehouse'] = testUpgradedWarehouse;
+    expect(reducer(testState, upgradeWarehouse()).resources).toEqual({
+      gold: {owned: 200},
+      wood: {owned: 39}
+    });
+  });
+
+  it('should increase warehouse capacity on warehouse upgrade', () => {
+    const testState = {
+      type: 'testwarehouse',
+      resources: {
+        gold: {owned: 300},
+        wood: {owned: 40}
+      },
+      totalCapacity: 20
+    };
+    Buildings['testwarehouse'] = testBaseWarehouse;
+    Buildings['testupgradedwarehouse'] = testUpgradedWarehouse;
+    expect(reducer(testState, upgradeWarehouse()).totalCapacity).toEqual(30);
+  });
+
+  it('should set warehouse ID on warehouse upgrade', () => {
+    const testState = {
+      type: 'testwarehouse',
+      resources: {
+        gold: {owned: 300},
+        wood: {owned: 40}
+      },
+      totalCapacity: 20
+    };
+    Buildings['testwarehouse'] = testBaseWarehouse;
+    Buildings['testupgradedwarehouse'] = testUpgradedWarehouse;
+    expect(reducer(testState, upgradeWarehouse()).type).toEqual('testupgradedwarehouse');
+  });
+
+  it('should should maintain state if warehouse cannot upgrade', () => {
+    const testState = {
+      type: 'testupgradedwarehouse',
+      resources: {
+        gold: {owned: 300},
+        wood: {owned: 40}
+      },
+      totalCapacity: 20
+    };
+    Buildings['testwarehouse'] = testBaseWarehouse;
+    Buildings['testupgradedwarehouse'] = testUpgradedWarehouse;
+    expect(reducer(testState, upgradeWarehouse())).toEqual(testState);
   });
 });

@@ -3,13 +3,17 @@ import { ACTIONS } from '../actions/trade';
 import Traders from '../data/trader-info';
 import ResourceDefinitions from './resource-definitions';
 
-const BASE_TRADER_STAY_TIME_SECONDS = 240;
+const BASE_TRADER_STAY_TIME_SECONDS = 360;
+const BASE_TRADER_VACANCY_TIME_SECONDS = 180;
+const BASE_DISMISS_COST = 100;
 
 const INIT_STATE = {
   traderId: 0,
   timer: 0,
-  timeToLeave: 300,
-  wares: {}
+  timeToLeave: BASE_TRADER_STAY_TIME_SECONDS,
+  wares: {},
+  newGame: true,
+  dismissCost: BASE_DISMISS_COST
 };
 
 export default function(trader=INIT_STATE, action) {
@@ -44,6 +48,14 @@ export default function(trader=INIT_STATE, action) {
         return newTrader(newState);
       }
       return newState;
+    case ACTIONS.DISMISS_TRADER: {
+      const newState = {...trader};
+      newState.traderId = 0;
+      newState.wares = {};
+      newState.time = 0;
+      newState.timeToLeave = BASE_TRADER_VACANCY_TIME_SECONDS;
+      return newState;
+    }
     default:
       return trader;
   }
@@ -51,7 +63,11 @@ export default function(trader=INIT_STATE, action) {
 
 function newTrader(currentState) { // atm, more like "restock goods"
   const traders = Object.keys(Traders);
-  const selectedTrader = traders[Math.floor(Math.random() * traders.length)];
+  let selectedTrader = traders[Math.floor(Math.random() * traders.length)];
+  if (currentState.newGame) {
+    currentState.newGame = false;
+    selectedTrader = 'lord';
+  }
   const traderInfo = Traders[selectedTrader];
   const wares = {};
   const maxCapacity = traderInfo.baseCapacity;
@@ -75,7 +91,7 @@ function newTrader(currentState) { // atm, more like "restock goods"
       held: 0
     }
     if (sellPrice > 0) {
-      wares[good].held = maxCapacity;
+      wares[good].held = Math.floor(maxCapacity * 0.75);
     }
   }
 

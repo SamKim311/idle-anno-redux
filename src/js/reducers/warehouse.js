@@ -62,6 +62,11 @@ export default function(warehouse = {}, action) {
 
       return warehouseCopy;
     }
+    case tradeActions.DISMISS_TRADER: {
+      const cost = payload.cost;
+      const updatedResources = deductCost(warehouse.resources, cost);
+      return {...warehouse, resources: updatedResources};
+    }
     case tradeActions.BUY_GOODS: {
       const good = payload.product;
       const amount = payload.amount;

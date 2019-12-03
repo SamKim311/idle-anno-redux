@@ -1,5 +1,5 @@
 import reducer from '../../js/reducers/trader';
-import { buyGood, sellGood } from '../../js/actions/trade';
+import { buyGood, sellGood, dismissTrader } from '../../js/actions/trade';
 import { tick } from '../../js/actions/game';
 
 describe('trader reducer', () => {
@@ -7,8 +7,10 @@ describe('trader reducer', () => {
     expect(reducer(undefined, {})).toEqual({
       traderId: 0,
       timer: 0,
-      timeToLeave: 300,
-      wares: {}
+      timeToLeave: 360,
+      wares: {},
+      newGame: true,
+      dismissCost: 100
     });
   });
 
@@ -53,7 +55,7 @@ describe('trader reducer', () => {
         }
       }
     };
-    expect(reducer(testState, tick(1)).wares.tool.held).toEqual(40);
+    expect(reducer(testState, tick(1)).wares.tool.held).toBeGreaterThan(2);
   });
 
   it('should not refresh wares on tick', () => {
@@ -90,6 +92,13 @@ describe('trader reducer', () => {
       }
     };
     expect(reducer(testState, sellGood('tool', 2, 1)).wares.tool.held).toEqual(22);
+  });
+
+  it('should set traderId to none when dismissed', () => {
+    const testState = {
+      traderId: 'something'
+    };
+    expect(reducer(testState, dismissTrader(1)).traderId).toEqual(0);
   });
 
 });

@@ -3,7 +3,7 @@ import { init } from '../../js/actions/game';
 import { constructBuilding, destroyBuilding } from '../../js/actions/construction';
 import { buildHouse, ascendHouse } from '../../js/actions/housing';
 import { buildWarehouse, upgradeWarehouse } from '../../js/actions/warehouse';
-import { buyGood, sellGood } from '../../js/actions/trade';
+import { buyGood, sellGood, dismissTrader } from '../../js/actions/trade';
 import Buildings from '../../js/reducers/building-definitions';
 
 describe('warehouse reducer', () => {
@@ -236,5 +236,14 @@ describe('warehouse reducer', () => {
     Buildings['testwarehouse'] = testBaseWarehouse;
     Buildings['testupgradedwarehouse'] = testUpgradedWarehouse;
     expect(reducer(testState, upgradeWarehouse())).toEqual(testState);
+  });
+
+  it('should deduct gold cost if trader is dismissed', () => {
+    const testState = {
+      resources: {
+        gold: {owned: 1000}
+      }
+    };
+    expect(reducer(testState, dismissTrader(50)).resources.gold.owned).toEqual(950);
   });
 });

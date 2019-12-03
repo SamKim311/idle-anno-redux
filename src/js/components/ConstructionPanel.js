@@ -32,6 +32,7 @@ const ConstructionPanel = () => {
     return (
       <div className='construction' key={buildingId}>
         <div className='construction-header'><h4>{buildingInfo.name}</h4></div>
+        <div className='description'><h5>{buildingInfo.description}</h5></div>
         <div>Owned: {construction.owned}</div>
         <div className='ingredientList'>{ingredientPanel}</div>
         <button className='purchase' onClick={buyFunction} disabled={!construction.canAfford}>Buy</button>

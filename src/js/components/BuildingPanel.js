@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { BUILDING_CATEGORY } from '../data/building-definitions';
+import Buildings, { BUILDING_CATEGORY } from '../data/building-definitions';
 import { destroyBuilding } from '../actions/construction';
 
 import '../../style/building.css';
@@ -15,12 +15,13 @@ const BuildingPanel = () => {
   }
 
   let buildingList = Object.values(buildings).map((building) => {
-    if (building.category === BUILDING_CATEGORY.PRODUCER) {
+    const buildingInfo = Buildings[building.buildingId];
+    if (buildingInfo.category === BUILDING_CATEGORY.PRODUCER) {
       return <Building building={building} key={building.id} destroyFunc={destroyBuildingFn}></Building>
     } else {
       return (
         <div className='building' key={building.id}>
-          <div className='building-header'><h4>{building.name}</h4></div>
+          <div className='building-header'><h4>{buildingInfo.name}</h4></div>
           <button onClick={() => destroyBuildingFn(building)}>Destroy</button>
         </div>
       )
@@ -36,11 +37,12 @@ const BuildingPanel = () => {
 
 const Building = (props) => {
   let building = props.building;
+  const buildingInfo = Buildings[building.buildingId];
   return (
     <div className='building'>
-      <div className='building-header'><h4>{building.name}</h4></div>
+      <div className='building-header'><h4>{buildingInfo.name}</h4></div>
       <div className='status'>{building.status}</div>
-      <div>{building.progress.toFixed(1)} / {building.produceTime}</div>
+      <div>{building.progress.toFixed(1)} / {buildingInfo.produceTime}</div>
       <div>Efficiency: {building.efficiency}</div>
       <div className='inbox'>Inbox: {JSON.stringify(building.inbox)}</div>
       <div className='outbox'>Outbox: {JSON.stringify(building.outbox)}</div>

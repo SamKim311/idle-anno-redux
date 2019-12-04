@@ -1,4 +1,5 @@
 import { ACTIONS } from '../actions/game';
+import Buildings from '../data/building-definitions';
 
 const POP_GROWTH_TIME_SECONDS = 10;
 const POP_GROWTH_THRESHOLD = 40;
@@ -19,7 +20,7 @@ export default function(state = {}, action) {
       // go house by house, increment growth timer
       const newAbodes = houses.abodes.map((abodeOriginal) => {
         const abode = Object.assign({}, abodeOriginal);
-        const curHappiness = population[abode.populationCategory].happiness;
+        const curHappiness = population[Buildings[abode.houseId].populationCategory].happiness;
         let growthFactor = 0;
 
         if (curHappiness >= POP_GROWTH_THRESHOLD && abode.currentPop < abode.populationCap) {
@@ -39,11 +40,12 @@ export default function(state = {}, action) {
           abode.currentPop = 1;
         }
 
-        if (!populationCounts[abode.populationCategory]) {
-          populationCounts[abode.populationCategory] = 0;
+        const popCategory = Buildings[abode.houseId].populationCategory;
+        if (!populationCounts[popCategory]) {
+          populationCounts[popCategory] = 0;
         }
 
-        populationCounts[abode.populationCategory] += abode.currentPop;
+        populationCounts[popCategory] += abode.currentPop;
 
         return abode;
       });

@@ -31,7 +31,8 @@ export default function(housing = {}, action) {
       const toBuild = payload.toConstruct.id; // should really just be peasanthouse
       const type = Object.assign({}, types[toBuild]);
       types[toBuild] = type;
-      const abode = Object.assign({}, BuildingDefinitions[toBuild], initHouseState, {houseId: toBuild});
+      const houseData = BuildingDefinitions[toBuild];
+      const abode = {...initHouseState, houseId: toBuild, populationCap: houseData.populationCap};
 
       type.owned += 1;
       abodes.push(abode);

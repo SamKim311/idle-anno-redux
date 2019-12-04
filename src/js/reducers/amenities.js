@@ -1,6 +1,6 @@
 // this could probably be done with thunk instead
 import { ACTIONS } from '../actions/game';
-import { BUILDING_CATEGORY } from '../data/building-definitions';
+import Buildings, { BUILDING_CATEGORY } from '../data/building-definitions';
 
 const TIME_FACTOR = 1 / 60.0;
 
@@ -14,11 +14,12 @@ export default function(state = {}, action) {
 
       const amenities = {};
       for (let building of Object.values(buildings.owned)) {
-        if (building.category !== BUILDING_CATEGORY.AMENITY) {
+        const buildingInfo = Buildings[building.buildingId];
+        if (buildingInfo.category !== BUILDING_CATEGORY.AMENITY) {
           continue;
         }
 
-        for (let [amenity, amount] of Object.entries(building.produces)) {
+        for (let [amenity, amount] of Object.entries(buildingInfo.produces)) {
           if (!amenities[amenity]) {
             amenities[amenity] = 0;
           }

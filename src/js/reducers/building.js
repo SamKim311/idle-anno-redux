@@ -41,8 +41,9 @@ export default function(buildings = {}, action) {
 
       const timeIntervalS = payload.tickIntervalSeconds;
       Object.values(buildings.owned).forEach((building) => {
+        const buildingInfo = BuildingDefinitions[building.buildingId];
         let updatedBuilding = null;
-        if (building.category === BUILDING_CATEGORY.PRODUCER) {
+        if (buildingInfo.category === BUILDING_CATEGORY.PRODUCER) {
           updatedBuilding = doProductionTick(building, timeIntervalS);
         } else {
           updatedBuilding = building;
@@ -54,7 +55,7 @@ export default function(buildings = {}, action) {
     case warehouseActions.BUILD_WAREHOUSE:
     case CONSTRUCTION_ACTIONS.CONSTRUCT_BUILDING:
       const buildingToBuild = BuildingDefinitions[payload.toConstruct.id];
-      let newBuilding = Object.assign({}, buildingToBuild, {id: uuidv4(), buildingId: payload.toConstruct.id});
+      let newBuilding = Object.assign({}, {id: uuidv4(), buildingId: payload.toConstruct.id});
       if (buildingToBuild.category === BUILDING_CATEGORY.PRODUCER) {
         newBuilding = Object.assign(newBuilding, initialProducerState);
         initializeInOutBox(newBuilding);
@@ -73,19 +74,21 @@ export default function(buildings = {}, action) {
 }
 
 function initializeInOutBox(building) {
+  const buildingInfo = BuildingDefinitions[building.buildingId];
   building.inbox = {};
-  for (let ingredient of Object.keys(building.consumes)) {
+  for (let ingredient of Object.keys(buildingInfo.consumes)) {
     building.inbox[ingredient] = 0;
   }
 
   building.outbox = {};
-  for (let good of Object.keys(building.produces)) {
+  for (let good of Object.keys(buildingInfo.produces)) {
     building.outbox[good] = 0;
   }
 }
 
 function doProductionTick(building, timeIntervalS) {
   let buildingCopy = Object.assign({}, building);
+  const buildingInfo = BuildingDefinitions[buildingCopy.buildingId];
 
   if (!canAfford(buildingCopy)) {
     buildingCopy.status = buildingStatus.AWAITING_RESOURCES;
@@ -117,16 +120,16 @@ function doProductionTick(building, timeIntervalS) {
   buildingCopy = progressEfficiency(buildingCopy, timeIntervalS);
 
   buildingCopy.progress += timeIntervalS * buildingCopy.efficiency * EFFICIENCY_FACTOR;
-  if (buildingCopy.progress > buildingCopy.produceTime) {
-    buildingCopy.progress -= buildingCopy.produceTime;
+  if (buildingCopy.progress > buildingInfo.produceTime) {
+    buildingCopy.progress -= buildingInfo.produceTime;
     let inboxCopy = Object.assign({}, buildingCopy.inbox);
     let outboxCopy = Object.assign({}, buildingCopy.outbox);
 
-    for (let [ingredient, consumed] of Object.entries(buildingCopy.consumes)) {
+    for (let [ingredient, consumed] of Object.entries(buildingInfo.consumes)) {
       inboxCopy[ingredient] -= consumed;
     }
 
-    for (let [good, produced] of Object.entries(buildingCopy.produces)) {
+    for (let [good, produced] of Object.entries(buildingInfo.produces)) {
       outboxCopy[good] += produced;
     }
 
@@ -138,7 +141,8 @@ function doProductionTick(building, timeIntervalS) {
 }
 
 function canAfford(building) {
-  for (let [ingredient, consumed] of Object.entries(building.consumes)) {
+  const buildingInfo = BuildingDefinitions[building.buildingId];
+  for (let [ingredient, consumed] of Object.entries(buildingInfo.consumes)) {
     if (building.inbox[ingredient] < consumed) {
       return false;
     }
@@ -147,7 +151,8 @@ function canAfford(building) {
 }
 
 function outboxHasRoom(building) {
-  for (let [good, produced] of Object.entries(building.produces)) {
+  const buildingInfo = BuildingDefinitions[building.buildingId];
+  for (let [good, produced] of Object.entries(buildingInfo.produces)) {
     let outboxGood = building.outbox[good];
     if (outboxGood + produced > BASE_IN_OUT_BOX_CAPACITY) {
       return false;

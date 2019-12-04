@@ -310,7 +310,8 @@ function findJobs(courier, warehouse, buildings) {
     jobRef: {}
   }
   for (let building of Object.values(buildings)) {
-    if (building.category !== BUILDING_CATEGORY.PRODUCER) {
+    const buildingInfo = BuildingDefinitions[building.buildingId];
+    if (buildingInfo.category !== BUILDING_CATEGORY.PRODUCER) {
       continue;
     }
     for (let [ingredient, amount] of Object.entries(building.inbox)) {
@@ -334,7 +335,8 @@ function findJobs(courier, warehouse, buildings) {
 
   // check buildings that need outbox picked up
   const pickups = Object.values(buildings).reduce((accumulator, building) => {
-    if (building.category !== BUILDING_CATEGORY.PRODUCER) {
+    const buildingInfo = BuildingDefinitions[building.buildingId];
+    if (buildingInfo.category !== BUILDING_CATEGORY.PRODUCER) {
       return accumulator;
     }
     for (let [product, amount] of Object.entries(building.outbox)) {

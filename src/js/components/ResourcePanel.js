@@ -19,9 +19,10 @@ const ResourcePanel = () => {
   }
 
   let upgradeButton = null;
-  if (warehouseInfo.upgradesTo && setAffordable({cost: warehouseInfo.upgradeCost}, resources).canAfford) {
+  if (warehouseInfo.upgradesTo) {
+    const canAfford = setAffordable({cost: warehouseInfo.upgradeCost}, resources).canAfford;
     upgradeButton = (
-      <button onClick={upgradeWarehouseFn}>Upgrade</button>
+      <button onClick={upgradeWarehouseFn} disabled={!canAfford}>Upgrade</button>
     );
   }
 

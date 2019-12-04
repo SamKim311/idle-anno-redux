@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { filterUnlocked, setAllAffordable } from '../selectors';
-import BuildingDefinitions, { BUILDING_CATEGORY } from '../reducers/building-definitions';
-import ResourceDefinitions from '../reducers/resource-definitions';
+import BuildingDefinitions, { BUILDING_CATEGORY } from '../data/building-definitions';
+import ResourceDefinitions from '../data/resource-definitions';
 import { constructBuilding } from '../actions/construction';
 import { buildHouse } from '../actions/housing';
 import { buildWarehouse } from '../actions/warehouse';

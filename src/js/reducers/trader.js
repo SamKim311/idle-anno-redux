@@ -1,7 +1,7 @@
 import { ACTIONS as gameActions } from '../actions/game';
 import { ACTIONS } from '../actions/trade';
 import Traders from '../data/trader-info';
-import ResourceDefinitions from './resource-definitions';
+import ResourceDefinitions from '../data/resource-definitions';
 
 const BASE_TRADER_STAY_TIME_SECONDS = 360;
 const BASE_TRADER_VACANCY_TIME_SECONDS = 180;

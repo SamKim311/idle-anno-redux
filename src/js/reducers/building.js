@@ -3,7 +3,7 @@ import uuidv4 from 'uuid/v4';
 import { ACTIONS as CONSTRUCTION_ACTIONS } from '../actions/construction';
 import { ACTIONS as GAME_ACTIONS } from '../actions/game';
 import { ACTIONS as warehouseActions } from '../actions/warehouse';
-import BuildingDefinitions, { BUILDING_CATEGORY } from './building-definitions';
+import BuildingDefinitions, { BUILDING_CATEGORY } from '../data/building-definitions';
 
 const buildingStatus = {
   AWAITING_RESOURCES: 'AWAITING_RESOURCES',

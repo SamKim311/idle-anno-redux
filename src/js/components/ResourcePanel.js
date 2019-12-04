@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { upgradeWarehouse } from '../actions/warehouse';
 import { filterUnlocked, setAffordable } from '../selectors';
-import Buildings from '../reducers/building-definitions';
-import ResourceDefinitions from '../reducers/resource-definitions';
+import Buildings from '../data/building-definitions';
+import ResourceDefinitions from '../data/resource-definitions';
 
 import '../../style/resource.css';
 

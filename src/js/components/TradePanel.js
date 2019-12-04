@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import Resources from '../reducers/resource-definitions';
+import Resources from '../data/resource-definitions';
 import Traders from '../data/trader-info';
 import { buyGood, sellGood, dismissTrader } from '../actions/trade';
 import { filterUnlocked } from '../selectors';

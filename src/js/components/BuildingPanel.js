@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { BUILDING_CATEGORY } from '../reducers/building-definitions';
+import { BUILDING_CATEGORY } from '../data/building-definitions';
 import { destroyBuilding } from '../actions/construction';
 
 import '../../style/building.css';

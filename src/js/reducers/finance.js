@@ -1,6 +1,6 @@
 import { ACTIONS } from '../actions/game';
-import BuildingDefinitions from './building-definitions';
-import PopulationDefinitions from './population-definitions';
+import BuildingDefinitions from '../data/building-definitions';
+import PopulationDefinitions from '../data/population-definitions';
 
 const TIME_FACTOR = 1/60.0;
 const TAX_HAPPINESS_FACTOR = 1 / 100.0;

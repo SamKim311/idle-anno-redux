@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
-import ResourceDefinitions from '../reducers/resource-definitions';
+import ResourceDefinitions from '../data/resource-definitions';
 
 import '../../style/courier.css';
 

@@ -1,6 +1,6 @@
 // this could probably be done with thunk instead
 import { ACTIONS } from '../actions/game';
-import { BUILDING_CATEGORY } from './building-definitions';
+import { BUILDING_CATEGORY } from '../data/building-definitions';
 
 const TIME_FACTOR = 1 / 60.0;
 

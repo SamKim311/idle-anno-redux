@@ -1,5 +1,5 @@
 import { ACTIONS } from '../actions/game';
-import { unlockThresholds, unlocks } from './level-up-definitions'
+import { unlockThresholds, unlocks } from '../data/level-up-definitions'
 
 export default function(state = {}, action) {
   switch (action.type) {

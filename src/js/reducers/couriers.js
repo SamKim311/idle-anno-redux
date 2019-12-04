@@ -3,7 +3,7 @@ import uuidv4 from 'uuid/v4';
 import { ACTIONS as gameActions } from '../actions/game';
 import { ACTIONS as warehouseActions } from '../actions/warehouse';
 import { ACTIONS as constructionActions } from '../actions/construction';
-import BuildingDefinitions, { BUILDING_CATEGORY } from './building-definitions';
+import BuildingDefinitions, { BUILDING_CATEGORY } from '../data/building-definitions';
 import { BASE_IN_OUT_BOX_CAPACITY } from './building';
 
 const courierState = {

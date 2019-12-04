@@ -1,4 +1,4 @@
-import BuildingDefinitions from '../reducers/building-definitions';
+import BuildingDefinitions from '../data/building-definitions';
 
 export const ACTIONS = {
   BUILD_HOUSE: 'BUILD_HOUSE',

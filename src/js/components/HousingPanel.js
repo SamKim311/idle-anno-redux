@@ -1,5 +1,5 @@
 import React from 'react';
-import BuildingDefinitions from '../reducers/building-definitions';
+import BuildingDefinitions from '../data/building-definitions';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { filterUnlocked } from '../selectors';
 

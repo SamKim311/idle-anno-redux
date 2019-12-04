@@ -1,6 +1,6 @@
 import { ACTIONS as housingActions } from '../actions/housing';
 import { ACTIONS as gameActions } from '../actions/game';
-import BuildingDefinitions from './building-definitions';
+import BuildingDefinitions from '../data/building-definitions';
 
 const POP_ASCENSION_HAPPINESS_THRESHOLD = 97;
 

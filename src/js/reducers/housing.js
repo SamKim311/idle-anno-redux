@@ -1,5 +1,5 @@
 import { ACTIONS } from '../actions/housing';
-import BuildingDefinitions from './building-definitions';
+import BuildingDefinitions from '../data/building-definitions';
 
 const initHouseState = {
   popProgress: 0,

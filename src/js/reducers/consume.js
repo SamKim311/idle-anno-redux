@@ -1,5 +1,5 @@
 import { ACTIONS } from '../actions/game';
-import PopulationDefinitions from './population-definitions';
+import PopulationDefinitions from '../data/population-definitions';
 
 const TIME_FACTOR = 1 / 60.0;
 const CONSUME_FACTOR = 1 / 100.0;

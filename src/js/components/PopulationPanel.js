@@ -1,5 +1,5 @@
 import React from 'react';
-import PopulationDefinitions from '../reducers/population-definitions';
+import PopulationDefinitions from '../data/population-definitions';
 import { useSelector, shallowEqual } from 'react-redux';
 import { filterUnlocked } from '../selectors';
 

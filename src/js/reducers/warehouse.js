@@ -3,7 +3,7 @@ import { ACTIONS as gameActions } from '../actions/game';
 import { ACTIONS as constructionActions } from '../actions/construction';
 import { ACTIONS as housingActions } from '../actions/housing';
 import { ACTIONS as tradeActions } from '../actions/trade';
-import BuildingDefinitions from './building-definitions';
+import BuildingDefinitions from '../data/building-definitions';
 
 const resourceDecorations = {
   reserved: 0,

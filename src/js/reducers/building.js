@@ -1,5 +1,5 @@
 import uuidv4 from 'uuid/v4';
-
+import { ACTIONS } from '../actions/building';
 import { ACTIONS as CONSTRUCTION_ACTIONS } from '../actions/construction';
 import { ACTIONS as GAME_ACTIONS } from '../actions/game';
 import { ACTIONS as warehouseActions } from '../actions/warehouse';
@@ -19,7 +19,8 @@ const initialProducerState = {
   efficiencyTimer: 0,
   efficiencySupplied: false,
   inbox: {},
-  outbox: {}
+  outbox: {},
+  enabled: true
 }
 
 const EFFICIENCY_FACTOR = 1 / 100.0;
@@ -68,6 +69,18 @@ export default function(buildings = {}, action) {
       const newOwned = {...buildings.owned};
       delete newOwned[buildingToDestroy.id];
       return {...buildings, owned: newOwned};
+    case ACTIONS.DISABLE_BUILDING: {
+      const toDisable = payload.id;
+      const disabled = {...buildings.owned[toDisable], enabled: false};
+      const owned = {...buildings.owned, [toDisable]: disabled};
+      return {...buildings, owned: owned};
+    }
+    case ACTIONS.ENABLE_BUILDING: {
+      const toEnable = payload.id;
+      const enabled = {...buildings.owned[toEnable], enabled: true};
+      const owned = {...buildings.owned, [toEnable]: enabled};
+      return {...buildings, owned: owned};
+    }
     default:
       return buildings;
   }
@@ -89,6 +102,17 @@ function initializeInOutBox(building) {
 function doProductionTick(building, timeIntervalS) {
   let buildingCopy = Object.assign({}, building);
   const buildingInfo = BuildingDefinitions[buildingCopy.buildingId];
+
+  if (!building.enabled) {
+    buildingCopy.status = buildingStatus.DISABLED;
+    if (buildingCopy.efficiencySupplied) {
+      buildingCopy.efficiencySupplied = false;
+      buildingCopy.efficiencyTimer = 0;
+    }
+    buildingCopy = progressEfficiency(buildingCopy, timeIntervalS);
+
+    return buildingCopy;
+  }
 
   if (!canAfford(buildingCopy)) {
     buildingCopy.status = buildingStatus.AWAITING_RESOURCES;

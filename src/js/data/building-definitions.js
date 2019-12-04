@@ -36,7 +36,8 @@ const BuildingDefinitions = {
       fish: 1
     },
     produceTime: 30,
-    upkeep: 15
+    upkeep: 15,
+    disabledUpkeep: 5
   },
   lumberjackhut: {
     name: 'Lumberjack\'s Hut',
@@ -47,7 +48,8 @@ const BuildingDefinitions = {
       wood: 1
     },
     produceTime: 40,
-    upkeep: 5
+    upkeep: 5,
+    disabledUpkeep: 0
   },
   orchard: {
     name: 'Orchard',
@@ -58,7 +60,8 @@ const BuildingDefinitions = {
       apple: 1
     },
     produceTime: 100,
-    upkeep: 0
+    upkeep: 5,
+    disabledUpkeep: 0
   },
   ciderfarm: {
     name: 'Cider Farm',
@@ -71,7 +74,8 @@ const BuildingDefinitions = {
       cider: 1
     },
     produceTime: 40,
-    upkeep: 15
+    upkeep: 15,
+    disabledUpkeep: 5
   },
   hempfarm: {
     name: 'Hemp Plantation',
@@ -82,7 +86,8 @@ const BuildingDefinitions = {
       hemp: 1
     },
     produceTime: 60,
-    upkeep: 20
+    upkeep: 20,
+    disabledUpkeep: 10
   },
   weavers: {
     name: 'Weaver\'s Hut',
@@ -95,7 +100,8 @@ const BuildingDefinitions = {
       linen: 1
     },
     produceTime: 30,
-    upkeep: 25
+    upkeep: 25,
+    disabledUpkeep: 12
   },
   quarry: {
     name: 'Stone Quarry',
@@ -106,7 +112,8 @@ const BuildingDefinitions = {
       stone: 1
     },
     produceTime: 30,
-    upkeep: 20
+    upkeep: 20,
+    disabledUpkeep: 10
   },
   stonemason: {
     name: 'Stonemason',
@@ -119,7 +126,8 @@ const BuildingDefinitions = {
       stonebrick: 1
     },
     produceTime: 30,
-    upkeep: 20
+    upkeep: 20,
+    disabledUpkeep: 10
   },
 
   // Houses

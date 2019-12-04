@@ -26,8 +26,11 @@ export default function(state = {}, action) {
 
       // start with Warehouse maintenance
       const warehouseMaintenance = BuildingDefinitions[warehouse.type].upkeep * timeIntervalS * TIME_FACTOR;
-      const totalMaintenance = Object.values(state.construction).reduce((sum, construction) => {
-        return sum + (BuildingDefinitions[construction.id].upkeep * construction.owned * timeIntervalS * TIME_FACTOR);
+      const totalMaintenance = Object.values(state.buildings.owned).reduce((sum, building) => {
+        let upkeep = building.enabled ?
+          BuildingDefinitions[building.buildingId].upkeep :
+          BuildingDefinitions[building.buildingId].disabledUpkeep;
+        return sum + (upkeep * timeIntervalS * TIME_FACTOR);
       }, warehouseMaintenance);
 
       const totalTaxes = Object.values(state.population).reduce((sum, population) => {

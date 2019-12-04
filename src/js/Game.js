@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { tick as dispatchTick, init as dispatchInit } from './actions/game';
 import Scheduler from './scheduler';
 
+import IslandNameView from './components/IslandNameView';
 import TimeFactor from './components/cheats/TimeFactor';
 import ResourcePanel from './components/ResourcePanel';
 import CourierMonitor from './components/CourierMonitor';
@@ -32,6 +33,7 @@ function Game() {
     <div className="game">
       <SaveLoad></SaveLoad>
       <TimeFactor></TimeFactor>
+      <IslandNameView></IslandNameView>
       <ResourcePanel></ResourcePanel>
       <TradePanel></TradePanel>
       <PopulationPanel></PopulationPanel>

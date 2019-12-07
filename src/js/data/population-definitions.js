@@ -64,6 +64,16 @@ const PopulationDefinitions = {
         weight: 20
       }
     }
+  },
+  patrician: {
+    name: 'Patrician',
+    taxRate: 1.05,
+    consumes: {}
+  },
+  noble: {
+    name: 'Noble',
+    taxRate: 1.15,
+    consumes: {}
   }
 };
 

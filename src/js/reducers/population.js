@@ -88,5 +88,7 @@ export default function(populationState = {}, action) {
 };
 
 function calculateBeggarCount(population) {
-  return Math.floor(population['citizen'].maxPopulation * 0.1);
+  return Math.floor(population['citizen'].maxPopulation * 0.1 +
+                    population['patrician'].maxPopulation * 0.2 +
+                    population['noble'].maxPopulation * 0.3);
 }

@@ -228,6 +228,14 @@ const INITIAL_STATE = {
     citizen: {
       id: 'citizen',
       unlocked: false
+    },
+    patrician: {
+      id: 'patrician',
+      unlocked: false
+    },
+    noble: {
+      id: 'noble',
+      unlocked: false
     }
   }
 };

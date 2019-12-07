@@ -19,8 +19,7 @@ const initialProducerState = {
   efficiencyTimer: 0,
   efficiencySupplied: false,
   inbox: {},
-  outbox: {},
-  enabled: true
+  outbox: {}
 }
 
 const EFFICIENCY_FACTOR = 1 / 100.0;
@@ -56,7 +55,7 @@ export default function(buildings = {}, action) {
     case warehouseActions.BUILD_WAREHOUSE:
     case CONSTRUCTION_ACTIONS.CONSTRUCT_BUILDING:
       const buildingToBuild = BuildingDefinitions[payload.toConstruct.id];
-      let newBuilding = Object.assign({}, {id: uuidv4(), buildingId: payload.toConstruct.id});
+      let newBuilding = Object.assign({}, {id: uuidv4(), buildingId: payload.toConstruct.id, enabled: true});
       if (buildingToBuild.category === BUILDING_CATEGORY.PRODUCER) {
         newBuilding = Object.assign(newBuilding, initialProducerState);
         initializeInOutBox(newBuilding);

@@ -1,4 +1,18 @@
 const PopulationDefinitions = {
+  beggar: {
+    name: 'Beggar',
+    taxRate: 0,
+    consumes: {
+      fish: {
+        quantity: .7,
+        weight: 0
+      },
+      cider: {
+        quantity: .3,
+        weight: 0
+      }
+    }
+  },
   peasant: {
     name: 'Peasant',
     taxRate: 0.8,

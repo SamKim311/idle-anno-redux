@@ -11,8 +11,12 @@ const PopulationPanel = () => {
   const populationList = Object.values(populationState).map((pop) => {
       const popName = PopulationDefinitions[pop.id].name;
       const happiness = pop.happiness ? pop.happiness.toFixed() : 0;
+      let beggarTimer = null;
+      if (pop.id === 'beggar') {
+        beggarTimer = 1200 - pop.beggarTimer;
+      }
       return <div className='population' key={pop.id}>
-        {popName}: {pop.owned} / {pop.maxPopulation} Happiness: {happiness} {pop.consumeInfo}
+        {popName}: {pop.owned} / {pop.maxPopulation} Happiness: {happiness} {pop.consumeInfo} --- {beggarTimer}
       </div>
   });
 

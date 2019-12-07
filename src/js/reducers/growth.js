@@ -1,9 +1,14 @@
+import rn from 'random-number';
+
 import { ACTIONS } from '../actions/game';
 import Buildings from '../data/building-definitions';
 
 const POP_GROWTH_TIME_SECONDS = 10;
 const POP_GROWTH_THRESHOLD = 40;
 const POP_DECLINE_THRESHOLD = 20;
+const BEGGAR_ARRIVAL_TIMER = 1200; // 20 minutes
+const BEGGAR_ARRIVAL_MIN = 20;
+const BEGGAR_ARRIVAL_MAX = 200;
 
 export default function(state = {}, action) {
   let payload = action.payload;
@@ -57,8 +62,27 @@ export default function(state = {}, action) {
         population[popType] = newPop;
       }
 
+      // Increment beggar timer
+      const beggar = {...population['beggar']};
+      if (beggar.owned < beggar.maxPopulation) {
+        beggar.beggarTimer += timeIntervalS;
+        if (beggar.beggarTimer > BEGGAR_ARRIVAL_TIMER) {
+          beggar.beggarTimer -= BEGGAR_ARRIVAL_TIMER;
+          const incomingBeggars = getIncomingBeggars(beggar.maxPopulation - beggar.owned);
+          beggar.owned += incomingBeggars;
+        }
+      }
+      population['beggar'] = beggar;
+
       return newState;
     default:
       return state;
   }
+}
+
+function getIncomingBeggars(beggarDeficit) {
+  const lowerBound = Math.max(beggarDeficit, BEGGAR_ARRIVAL_MIN);
+  const upperBound = Math.min(lowerBound, BEGGAR_ARRIVAL_MAX);
+
+  return rn({min: lowerBound, max: upperBound, integer: true});
 }

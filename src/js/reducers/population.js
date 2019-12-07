@@ -12,6 +12,14 @@ const initValues = {
   consumeInfo: ''
 }
 
+const beggarValues = {
+  owned: 0,
+  maxPopulation: 0,
+  happiness: 0,
+  unhoused: 0,
+  beggarTimer: 0
+}
+
 export default function(populationState = {}, action) {
   const payload = action.payload;
   switch (action.type) {
@@ -19,8 +27,12 @@ export default function(populationState = {}, action) {
       const newState = Object.assign({}, populationState);
 
       for (let [popType, pop] of Object.entries(newState)) {
-        const newPop = Object.assign({}, pop, initValues);
-        newState[popType] = newPop;
+        if (popType === 'beggar') {
+          newState[popType] = {...beggarValues, ...pop};
+        } else {
+          const newPop = Object.assign({}, pop, initValues);
+          newState[popType] = newPop;
+        }
       }
 
       return newState;
@@ -38,6 +50,7 @@ export default function(populationState = {}, action) {
     }
     case gameActions.TICK: {
       const population = Object.assign({}, populationState);
+      const timeIntervalS = payload.tickIntervalSeconds;
 
       for (let [popType, pop] of Object.entries(population)) {
         if (pop.happiness > POP_ASCENSION_HAPPINESS_THRESHOLD && pop.owned === pop.maxPopulation) {
@@ -61,9 +74,19 @@ export default function(populationState = {}, action) {
       oldPop.maxPopulation -= currentHouse.populationCap;
       nextPop.maxPopulation += nextHouse.populationCap;
 
-      return {...populationState, [currentHouse.populationCategory]: oldPop, [nextHouse.populationCategory]: nextPop};
+      const newState = {...populationState, [currentHouse.populationCategory]: oldPop, [nextHouse.populationCategory]: nextPop};
+
+      // adjust max beggar population
+      const maxBeggars = calculateBeggarCount(newState);
+      newState['beggar'] = {...newState['beggar'], maxPopulation: maxBeggars};
+
+      return newState;
     }
     default:
       return populationState;
   }
 };
+
+function calculateBeggarCount(population) {
+  return Math.floor(population['citizen'].maxPopulation * 0.1);
+}

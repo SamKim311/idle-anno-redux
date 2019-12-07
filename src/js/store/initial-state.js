@@ -217,6 +217,10 @@ const INITIAL_STATE = {
     abodes: []
   },
   population: {
+    beggar: {
+      id: 'beggar',
+      unlocked: true
+    },
     peasant: {
       id: 'peasant',
       unlocked: true

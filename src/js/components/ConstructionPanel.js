@@ -1,4 +1,7 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { filterUnlocked, setAllAffordable } from '../selectors';
 import BuildingDefinitions, { BUILDING_CATEGORY } from '../data/building-definitions';
@@ -29,20 +32,30 @@ const ConstructionPanel = () => {
       buyFunction = () => dispatch(constructBuilding(construction));
     }
 
+    const popover =
+    <Popover id={buildingInfo.id}>
+      <Popover.Title as='h3'>{buildingInfo.description}</Popover.Title>
+      <Popover.Content>{ingredientPanel}</Popover.Content>
+    </Popover>;
+
     return (
-      <div className='construction' key={buildingId}>
-        <div className='construction-header'><h4>{buildingInfo.name} {buildingInfo.abbreviation && '(' + buildingInfo.abbreviation + ')'}</h4></div>
-        <div className='description'><h5>{buildingInfo.description}</h5></div>
-        <div>Owned: {construction.owned}</div>
-        <div className='ingredientList'>{ingredientPanel}</div>
-        <button className='purchase' onClick={buyFunction} disabled={!construction.canAfford}>Buy</button>
-      </div>
+      <OverlayTrigger
+        placement='top'
+        delay={{ show: 750, hide: 250 }}
+        overlay={popover}
+        >
+        <div className='construction' key={buildingId}>
+          <div className='construction-header'><p>{buildingInfo.name} {buildingInfo.abbreviation && '(' + buildingInfo.abbreviation + ')'}</p></div>
+          <div>Built: {construction.owned}</div>
+          <button className='purchase' onClick={buyFunction} disabled={!construction.canAfford}>Buy</button>
+        </div>
+      </OverlayTrigger>
     )
   });
   return (
-    <div className='construction-panel'>
+    <Container className='construction-panel'>
       {constructionList}
-    </div>
+    </Container>
   )
 };
 

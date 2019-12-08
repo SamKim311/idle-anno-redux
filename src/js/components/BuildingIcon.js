@@ -45,7 +45,7 @@ const BuildingIcon = (props) => {
       <OverlayTrigger
         placement='top'
         delay={{ show: 250, hide: 250 }}
-        overlay={(props) => <Tooltip {...props}>{toolTipContent}</Tooltip>}
+        overlay={(props) => <Tooltip {...props} id={toolTipContent}>{toolTipContent}</Tooltip>}
         >
         <div className={'building-icon ' + statusColor} onClick={handleShow}>
           {Buildings[building.buildingId].abbreviation}

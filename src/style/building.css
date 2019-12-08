@@ -6,3 +6,31 @@
   display: inline-block;
   padding: 5px;
 }
+
+.building-icon {
+  outline-width: 1px;
+  outline-color: black;
+  outline-style: solid;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+
+.building-icon.working {
+  background-color: #36d836;
+}
+
+.building-icon.disabled {
+  background-color: #9e9e9e;
+}
+
+.building-icon.awaiting {
+  background-color: #7ea0ff;
+}
+
+.building-icon.outbox-full {
+  background-color: #f534b0;
+}

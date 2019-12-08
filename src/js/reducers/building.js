@@ -3,14 +3,7 @@ import { ACTIONS } from '../actions/building';
 import { ACTIONS as CONSTRUCTION_ACTIONS } from '../actions/construction';
 import { ACTIONS as GAME_ACTIONS } from '../actions/game';
 import { ACTIONS as warehouseActions } from '../actions/warehouse';
-import BuildingDefinitions, { BUILDING_CATEGORY } from '../data/building-definitions';
-
-const buildingStatus = {
-  AWAITING_RESOURCES: 'AWAITING_RESOURCES',
-  WORKING: 'WORKING',
-  OUTBOX_FULL: 'OUTBOX_FULL',
-  DISABLED: 'DISABLED'
-}
+import BuildingDefinitions, { BUILDING_CATEGORY, buildingStatus } from '../data/building-definitions';
 
 const initialProducerState = {
   status: buildingStatus.AWAITING_RESOURCES,

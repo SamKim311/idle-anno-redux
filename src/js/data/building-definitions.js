@@ -5,10 +5,18 @@ export const BUILDING_CATEGORY = {
   WAREHOUSE: 'WAREHOUSE'
 }
 
+export const buildingStatus = {
+  AWAITING_RESOURCES: 'AWAITING_RESOURCES',
+  WORKING: 'WORKING',
+  OUTBOX_FULL: 'OUTBOX_FULL',
+  DISABLED: 'DISABLED'
+}
+
 const BuildingDefinitions = {
   // Amenities
   marketplace: {
     name: 'Marketplace',
+    abbreviation: 'M',
     description: 'Provides a place for villagers to meet',
     category: BUILDING_CATEGORY.AMENITY,
     produces: {
@@ -18,6 +26,7 @@ const BuildingDefinitions = {
   },
   chapel: {
     name: 'Chapel',
+    abbreviation: 'Ch',
     description: 'A basic building for villagers to worship',
     category: BUILDING_CATEGORY.AMENITY,
     produces: {
@@ -29,6 +38,7 @@ const BuildingDefinitions = {
   // Producers
   fishinghut: {
     name: 'Fisherman\'s Hut',
+    abbreviation: 'F',
     description: 'Gathers fish',
     category: BUILDING_CATEGORY.PRODUCER,
     consumes: {},
@@ -41,6 +51,7 @@ const BuildingDefinitions = {
   },
   lumberjackhut: {
     name: 'Lumberjack\'s Hut',
+    abbreviation: 'L',
     description: 'Gathers wood',
     category: BUILDING_CATEGORY.PRODUCER,
     consumes: {},
@@ -53,6 +64,7 @@ const BuildingDefinitions = {
   },
   orchard: {
     name: 'Orchard',
+    abbreviation: 'O',
     description: 'Grows apples to be turned into cider',
     category: BUILDING_CATEGORY.PRODUCER,
     consumes: {},
@@ -64,7 +76,8 @@ const BuildingDefinitions = {
     disabledUpkeep: 0
   },
   ciderfarm: {
-    name: 'Cider Farm',
+    name: 'Cidery',
+    abbreviation: 'C',
     description: 'Processes apples into cider',
     category: BUILDING_CATEGORY.PRODUCER,
     consumes: {
@@ -79,6 +92,7 @@ const BuildingDefinitions = {
   },
   hempfarm: {
     name: 'Hemp Plantation',
+    abbreviation: 'H',
     description: 'Grows hemp',
     category: BUILDING_CATEGORY.PRODUCER,
     consumes: {},
@@ -91,6 +105,7 @@ const BuildingDefinitions = {
   },
   weavers: {
     name: 'Weaver\'s Hut',
+    abbreviation: 'W',
     description: 'Uses hemp to create clothing',
     category: BUILDING_CATEGORY.PRODUCER,
     consumes: {
@@ -105,6 +120,7 @@ const BuildingDefinitions = {
   },
   quarry: {
     name: 'Stone Quarry',
+    abbreviation: 'Q',
     description: 'Gathers raw stone',
     category: BUILDING_CATEGORY.PRODUCER,
     consumes: {},
@@ -117,6 +133,7 @@ const BuildingDefinitions = {
   },
   stonemason: {
     name: 'Stonemason',
+    abbreviation: 'Sm',
     description: 'Turns raw stone into useable bricks',
     category: BUILDING_CATEGORY.PRODUCER,
     consumes: {
@@ -180,6 +197,7 @@ const BuildingDefinitions = {
   },
   smallstockpile: {
     name: 'Small Stockpile',
+    abbreviation: 'SS',
     description: 'Small depot. Provides 1 courier',
     category: BUILDING_CATEGORY.WAREHOUSE,
     upkeep: 10,

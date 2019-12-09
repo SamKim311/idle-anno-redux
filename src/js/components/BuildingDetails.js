@@ -2,14 +2,21 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Buildings, {BUILDING_CATEGORY} from '../data/building-definitions';
 
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { destroyBuilding } from '../actions/construction';
 import { disableBuilding, enableBuilding } from '../actions/building';
+import { upgradeStorehouse } from '../actions/warehouse';
+import { setAffordable } from '../selectors';
 
 const BuildingDetails = (props) => {
+  const resources = useSelector(state => state.warehouse.resources, shallowEqual)
   const dispatch = useDispatch();
   const building = props.building;
-  const buildingInfo = Buildings[building.buildingId];
+  let buildingInfo = Buildings[building.buildingId];
+
+  if (buildingInfo.upgradesTo) {
+    buildingInfo = setAffordable(buildingInfo, resources, 'upgradeCost');
+  }
 
   const destroyBuildingFn = (toDestroy) => {
     dispatch(destroyBuilding(toDestroy));
@@ -21,6 +28,10 @@ const BuildingDetails = (props) => {
     } else {
       dispatch(enableBuilding(building.id));
     }
+  }
+
+  const upgradeWarehouseFn = (building) => {
+    dispatch(upgradeStorehouse(building));
   }
 
   return (
@@ -44,6 +55,10 @@ const BuildingDetails = (props) => {
         {
           buildingInfo.category === BUILDING_CATEGORY.PRODUCER &&
           <button onClick={() => toggleEnableFn(building)}>{ building.enabled ? 'Disable' : 'Enable'}</button>
+        }
+        {
+          buildingInfo.upgradesTo &&
+          <button disabled={!buildingInfo.canAfford} onClick={() => upgradeWarehouseFn(building)}>Upgrade</button>
         }
         <button onClick={() => destroyBuildingFn(building)}>Destroy</button>
       </Modal.Footer>

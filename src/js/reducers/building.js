@@ -56,6 +56,12 @@ export default function(buildings = {}, action) {
       const newBuildings = Object.assign({}, buildings.owned);
       newBuildings[newBuilding.id] = newBuilding;
       return Object.assign({}, buildings, {owned: newBuildings});
+    case warehouseActions.UPGRADE_STOREHOUSE: {
+      const newStorehouse = {...buildings.owned[payload.toUpgrade.id]};
+      newStorehouse.buildingId = BuildingDefinitions[payload.toUpgrade.buildingId].upgradesTo;
+      const owned = {...buildings.owned, [payload.toUpgrade.id]: newStorehouse};
+      return {...buildings, owned: owned};
+    }
     case CONSTRUCTION_ACTIONS.DESTROY_BUILDING:
       const buildingToDestroy = payload.toDestroy;
       const newOwned = {...buildings.owned};

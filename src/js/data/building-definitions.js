@@ -202,7 +202,23 @@ const BuildingDefinitions = {
     category: BUILDING_CATEGORY.WAREHOUSE,
     upkeep: 10,
     couriers: 1,
-    capacity: 0
+    capacity: 0,
+    upgradesTo: 'mediumstockpile',
+    upgradeCost: {
+      gold: 200,
+      wood: 3,
+      tool: 1,
+      stonebrick: 3
+    }
+  },
+  mediumstockpile: {
+    name: 'Medium Stockpile',
+    abbreviation: 'MS',
+    description: 'Medium depot. Provides 2 couriers, and 5 storage',
+    category: BUILDING_CATEGORY.WAREHOUSE,
+    upkeep: 20,
+    couriers: 2,
+    capacity: 5
   }
 };
 

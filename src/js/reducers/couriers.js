@@ -39,12 +39,22 @@ export default function(state = {}, action) {
       const courierObjCopy = Object.assign({}, couriers);
       courierObjCopy.couriers = courierArrayCopy;
       return Object.assign({}, state, {couriers: courierObjCopy});
-    case warehouseActions.UPDGRADE_WAREHOUSE:
-      // "cheat" and modify the payload a bit so we can reuse the code for the below case
+    case warehouseActions.UPGRADE_STOREHOUSE: {
+      const thisWarehouse = BuildingDefinitions[payload.toUpgrade.buildingId]
+      const nextWarehouse = BuildingDefinitions[thisWarehouse.upgradesTo];
+      const couriersToAdd = nextWarehouse.couriers - thisWarehouse.couriers;
+      const courierList = [...state.couriers.couriers];
+      addCouriers(courierList, couriersToAdd);
+      const courierState = {...state.couriers, couriers: courierList};
+      return {...state, couriers: courierState};
+    }
+    case warehouseActions.UPDGRADE_WAREHOUSE: {
       const nextWarehouse = BuildingDefinitions[payload.toUpgrade].upgradesTo;
-      payload.toConstruct = {
-        id: nextWarehouse
-      };
+      const courierList = [...state.couriers.couriers];
+      addCouriers(courierList, nextWarehouse.couriers);
+      const courierState = {...state.couriers, couriers: courierList};
+      return {...state, couriers: courierState};
+    }
     case warehouseActions.BUILD_WAREHOUSE: {
       const builtWarehouse = BuildingDefinitions[payload.toConstruct.id];
       const addedCouriers = builtWarehouse.couriers;
@@ -57,7 +67,7 @@ export default function(state = {}, action) {
       return newState;
     }
     case constructionActions.DESTROY_BUILDING: {
-      const toDestroy = payload.toDestroy;
+      const toDestroy = BuildingDefinitions[payload.toDestroy.buildingId];
       if (toDestroy.category !== BUILDING_CATEGORY.WAREHOUSE) {
         return state;
       }
@@ -66,12 +76,18 @@ export default function(state = {}, action) {
       const couriers = {...state.couriers, couriers: courierList};
       const newState = {...state, couriers: couriers};
 
+      const couriersToRemove = toDestroy.couriers;
+      let couriersRemoved = 0;
+
       // try to find a courier that's idle
       for (let courierIndex = 0; courierIndex < courierList.length; courierIndex++) {
         const courier = courierList[courierIndex];
         if (courier.status === courierState.IDLE && !courier.markmarkedForDeath) {
           courierList.splice(courierIndex, 1);
-          return newState;
+          couriersRemoved++;
+          if (couriersRemoved === couriersToRemove) {
+            return newState;
+          }
         }
       }
 
@@ -80,7 +96,10 @@ export default function(state = {}, action) {
         const courier = courierList[courierIndex];
         if (!courier.markmarkedForDeath) {
           courier.markedForDeath = true;
-          return newState;
+          couriersRemoved++;
+          if (couriersRemoved === couriersToRemove) {
+            return newState;
+          }
         }
       }
 

@@ -62,6 +62,22 @@ export default function(warehouse = {}, action) {
 
       return warehouseCopy;
     }
+    case ACTIONS.UPGRADE_STOREHOUSE: {
+      const warehouseCopy = Object.assign({}, warehouse);
+      const currentWarehouse = BuildingDefinitions[payload.toUpgrade.buildingId];
+      const nextWarehouse = BuildingDefinitions[currentWarehouse.upgradesTo];
+      if (!nextWarehouse) {
+        return warehouse;
+      }
+
+      const cost = currentWarehouse.upgradeCost;
+      const newResources = deductCost(warehouseCopy.resources, cost);
+      warehouseCopy.resources = newResources;
+
+      warehouseCopy.totalCapacity += nextWarehouse.capacity;
+
+      return warehouseCopy;
+    }
     case tradeActions.DISMISS_TRADER: {
       const cost = payload.cost;
       const updatedResources = deductCost(warehouse.resources, cost);

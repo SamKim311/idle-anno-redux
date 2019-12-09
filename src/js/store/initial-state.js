@@ -74,7 +74,7 @@ const INITIAL_STATE = {
       id: 'chapel',
       owned: 0,
       cost: {
-        gold: 1500,
+        gold: 800,
         wood: 12,
         tool: 5
       },

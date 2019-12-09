@@ -41,16 +41,12 @@ function rootReducer(state, action) {
   const cheatState = cheat(state, action);
   const intermediateState = combinedReducer(cheatState, action);
   const courierState = couriers(intermediateState, action);
-  if (action.type === ACTIONS.TICK) {
-    const amenityState = amenity(courierState, action);
-    const consumptionState = consume(amenityState, action);
-    const growthState = growth(consumptionState, action);
-    const financeState = finance(growthState, action);
-    const levelUpState = levelUp(financeState, action);
-    return levelUpState;
-  } else {
-    return courierState;
-  }
+  const amenityState = amenity(courierState, action);
+  const consumptionState = consume(amenityState, action);
+  const growthState = growth(consumptionState, action);
+  const financeState = finance(growthState, action);
+  const levelUpState = levelUp(financeState, action);
+  return levelUpState;
 }
 
 export default rootReducer;

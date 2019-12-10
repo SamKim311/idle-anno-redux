@@ -4,6 +4,8 @@ import { upgradeWarehouse } from '../actions/warehouse';
 import { filterUnlocked, setAffordable } from '../selectors';
 import Buildings from '../data/building-definitions';
 import ResourceDefinitions from '../data/resource-definitions';
+import Button from 'react-bootstrap/Button';
+import PriceTooltip from './PriceTooltip';
 
 import '../../style/resource.css';
 
@@ -22,7 +24,11 @@ const ResourcePanel = () => {
   if (warehouseInfo.upgradesTo) {
     const canAfford = setAffordable({cost: warehouseInfo.upgradeCost}, resources).canAfford;
     upgradeButton = (
-      <button onClick={upgradeWarehouseFn} disabled={!canAfford}>Upgrade</button>
+      <PriceTooltip cost={warehouseInfo.upgradeCost} header='Upgrade for'>
+        <div>
+          <Button variant='primary' size='sm' onClick={upgradeWarehouseFn} disabled={!canAfford}>Upgrade</Button>
+        </div>
+      </PriceTooltip>
     );
   }
 

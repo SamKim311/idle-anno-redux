@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
@@ -9,6 +10,7 @@ import ResourceDefinitions from '../data/resource-definitions';
 import { constructBuilding } from '../actions/construction';
 import { buildHouse } from '../actions/housing';
 import { buildWarehouse } from '../actions/warehouse';
+import PriceTooltip from './PriceTooltip';
 
 import '../../style/construction.css';
 
@@ -19,9 +21,6 @@ const ConstructionPanel = () => {
 
   const constructionList = Object.entries(construction).map(([buildingId, construction]) => {
     const buildingInfo = BuildingDefinitions[buildingId];
-    const ingredientPanel = Object.keys(construction.cost).map((ingredient) => (
-      <div className='construction-ingredient' key={ingredient}>{ResourceDefinitions[ingredient].name}: {construction.cost[ingredient]}</div>
-    ));
 
     let buyFunction = null;
     if (buildingInfo.category === BUILDING_CATEGORY.HOUSE) {
@@ -32,24 +31,16 @@ const ConstructionPanel = () => {
       buyFunction = () => dispatch(constructBuilding(construction));
     }
 
-    const popover =
-    <Popover id={buildingInfo.id}>
-      <Popover.Title as='h3'>{buildingInfo.description}</Popover.Title>
-      <Popover.Content>{ingredientPanel}</Popover.Content>
-    </Popover>;
-
     return (
-      <OverlayTrigger
-        placement='top'
-        delay={{ show: 750, hide: 250 }}
-        overlay={popover}
-        >
-        <div className='construction' key={buildingId}>
-          <div className='construction-header'><p>{buildingInfo.name} {buildingInfo.abbreviation && '(' + buildingInfo.abbreviation + ')'}</p></div>
-          <div>Built: {construction.owned}</div>
-          <button className='purchase' onClick={buyFunction} disabled={!construction.canAfford}>Buy</button>
-        </div>
-      </OverlayTrigger>
+      <div className='construction' key={buildingId}>
+        <div className='construction-header'><p>{buildingInfo.name} {buildingInfo.abbreviation && '(' + buildingInfo.abbreviation + ')'}</p></div>
+        <div>Built: {construction.owned}</div>
+        <PriceTooltip cost={construction.cost} header={buildingInfo.description}>
+          <div>
+            <Button variant='primary' size='sm' className='purchase' onClick={buyFunction} disabled={!construction.canAfford}>Buy</Button>
+          </div>
+        </PriceTooltip>
+      </div>
     )
   });
   return (

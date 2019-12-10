@@ -1,5 +1,7 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import PriceTooltip from './PriceTooltip';
 import Buildings, {BUILDING_CATEGORY} from '../data/building-definitions';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
@@ -54,13 +56,17 @@ const BuildingDetails = (props) => {
       <Modal.Footer>
         {
           buildingInfo.category === BUILDING_CATEGORY.PRODUCER &&
-          <button onClick={() => toggleEnableFn(building)}>{ building.enabled ? 'Disable' : 'Enable'}</button>
+          <Button variant='warning' size='sm' onClick={() => toggleEnableFn(building)}>{ building.enabled ? 'Disable' : 'Enable'}</Button>
         }
         {
           buildingInfo.upgradesTo &&
-          <button disabled={!buildingInfo.canAfford} onClick={() => upgradeWarehouseFn(building)}>Upgrade</button>
+          <PriceTooltip cost={buildingInfo.upgradeCost}>
+            <div>
+              <Button variant='primary' size='sm' disabled={!buildingInfo.canAfford} onClick={() => upgradeWarehouseFn(building)}>Upgrade</Button>
+            </div>
+          </PriceTooltip>
         }
-        <button onClick={() => destroyBuildingFn(building)}>Destroy</button>
+        <Button variant='danger' size='sm' onClick={() => destroyBuildingFn(building)}>Destroy</Button>
       </Modal.Footer>
     </Modal>
   );

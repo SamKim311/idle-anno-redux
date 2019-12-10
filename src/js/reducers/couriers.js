@@ -188,9 +188,9 @@ export default function(state = {}, action) {
       couriersCopy.jobQueueMap = jobRefCopy;
 
       // work the couriers already on the job (look into merging with the map function up above)
-      const progressedCouriers = courierListCopy.map((courier) => {
+      courierListCopy.forEach((courier) => {
         if (courier.status === courierState.IDLE) {
-          return courier;
+          return;
         }
 
         courier.progress += payload.tickIntervalSeconds;
@@ -293,7 +293,6 @@ export default function(state = {}, action) {
               break;
           }
         }
-        return courier;
       });
 
       // check for any idle couriers marked for death

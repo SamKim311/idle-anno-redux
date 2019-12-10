@@ -1,12 +1,9 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Popover from 'react-bootstrap/Popover';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { filterUnlocked, setAllAffordable } from '../selectors';
 import BuildingDefinitions, { BUILDING_CATEGORY } from '../data/building-definitions';
-import ResourceDefinitions from '../data/resource-definitions';
 import { constructBuilding } from '../actions/construction';
 import { buildHouse } from '../actions/housing';
 import { buildWarehouse } from '../actions/warehouse';

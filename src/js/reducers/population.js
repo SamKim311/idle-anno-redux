@@ -50,7 +50,6 @@ export default function(populationState = {}, action) {
     }
     case gameActions.TICK: {
       const population = Object.assign({}, populationState);
-      const timeIntervalS = payload.tickIntervalSeconds;
 
       for (let [popType, pop] of Object.entries(population)) {
         if (pop.happiness > POP_ASCENSION_HAPPINESS_THRESHOLD && pop.owned === pop.maxPopulation) {

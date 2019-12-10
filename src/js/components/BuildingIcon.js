@@ -33,6 +33,7 @@ const BuildingIcon = (props) => {
         break;
       case buildingStatus.WORKING:
         statusColor = 'working';
+        break;
       default:
         break;
     }

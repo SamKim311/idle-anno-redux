@@ -13,6 +13,7 @@ import PopulationPanel from './components/PopulationPanel';
 import HousingPanel from './components/HousingPanel';
 import SaveLoad from './components/SaveLoad';
 import TradePanel from './components/TradePanel';
+import MilestonePane from './components/MilestonePane';
 
 const MS_TO_S = 1/1000.0;
 
@@ -40,6 +41,7 @@ function Game() {
       <SaveLoad></SaveLoad>
       <TimeFactor></TimeFactor>
       <IslandNameView></IslandNameView>
+      <MilestonePane></MilestonePane>
       <ResourcePanel></ResourcePanel>
       <TradePanel></TradePanel>
       <PopulationPanel></PopulationPanel>

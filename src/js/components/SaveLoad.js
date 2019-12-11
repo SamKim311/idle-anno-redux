@@ -1,14 +1,14 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { loadGame } from '../actions/game';
+import { saveGame, loadGame, resetSave } from '../actions/game';
 
 const SaveLoad = () => {
-  const state = useSelector(state => state);
   const dispatch = useDispatch();
 
   const copyState = () => {
-    const saveState = btoa(JSON.stringify(state));
+    dispatch(saveGame());
+    const saveState = localStorage.getItem('save');
     navigator.clipboard.writeText(saveState).then(() => {
       alert('Saved to clipboard');
     });
@@ -23,10 +23,18 @@ const SaveLoad = () => {
     }
   }
 
+  const resetSaveFn = () => {
+    const response = window.confirm('Are you sure you want to clear your save?');
+    if (response) {
+      dispatch(resetSave());
+    }
+  }
+
   return (
     <div className='save-load'>
       <button onClick={copyState}>Save</button>
       <button onClick={loadState}>Load</button>
+      <button onClick={resetSaveFn}>RESET</button>
     </div>
   )
 }

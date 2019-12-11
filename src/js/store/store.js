@@ -6,14 +6,14 @@ import INITIAL_STATE from './initial-state';
 export default function configureStore(initialState=INITIAL_STATE) {
   const saveState = localStorage.getItem('save');
   if (saveState) {
-    initialState = JSON.parse(atob(prompt('Enter load data')));
+    initialState = JSON.parse(atob(saveState));
   }
   if (!initialState) {
-    initialState = INITIAL_STATE;
+    initialState = rootReducer(null, {type: 'RESET_SAVE'});
   }
- return createStore(
+  return createStore(
    rootReducer,
    initialState,
    applyMiddleware(thunk) && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
- );
+  );
 }

@@ -14,6 +14,7 @@ import finance from './finance';
 import levelUp from './level-up';
 import cheat from './cheat';
 import trader from './trader';
+import INITIAL_STATE from '../store/initial-state';
 
 const combinedReducer = combineReducers({
   cheat: (state = {}) => { return state },
@@ -28,6 +29,16 @@ const combinedReducer = combineReducers({
 });
 
 function rootReducer(state, action) {
+  if (action.type === ACTIONS.SAVE_GAME) {
+    localStorage.setItem('save', btoa(JSON.stringify(state)));
+    return state;
+  }
+  if (action.type === ACTIONS.RESET_SAVE) {
+    let initState = INITIAL_STATE;
+    initState = rootReducer(initState, { type: ACTIONS.INIT }); // probably smelly
+    return initState;
+  }
+
   if (action.type === ACTIONS.LOAD_GAME) {
     return action.payload.saveState;
   }

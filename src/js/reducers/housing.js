@@ -8,14 +8,17 @@ const initHouseState = {
 
 const ascensionFactors = {
   peasanthouse: .8,
-  citizenhouse: .6
+  citizenhouse: .6,
+  patrician: .4,
+  noblehouse: 0
 }
 
 // precomputed list of current house and up because I'm lazy
 const rightsLists = {
-  peasanthouse: ['peasanthouse', 'citizenhouse'],
-  citizenhouse: ['citizenhouse'],
-  patricianhouse: []
+  peasanthouse: ['peasanthouse', 'citizenhouse', 'patricianhouse', 'noblehouse'],
+  citizenhouse: ['citizenhouse', 'patricianhouse', 'noblehouse'],
+  patricianhouse: ['patricianhouse', 'noblehouse'],
+  noblehouse: ['noblehouse']
 }
 
 export default function(housing = {}, action) {

@@ -4,23 +4,38 @@ import { ACTIONS as constructionActions } from '../actions/construction';
 import { ACTIONS as housingActions } from '../actions/housing';
 import { ACTIONS as tradeActions } from '../actions/trade';
 import BuildingDefinitions from '../data/building-definitions';
+import Resources from '../data/resource-definitions';
 
 const resourceDecorations = {
   reserved: 0,
   pending: 0
 }
 
+const initResourceState = {
+  owned: 0,
+  unlocked: false
+}
+
 export default function(warehouse = {}, action) {
   const payload = action.payload;
   switch(action.type) {
     case gameActions.INIT: {
-      // go through each resource and add the decorator, because I don't wanna copy and paste it a billion times
       const warehouseCopy = Object.assign({}, warehouse);
-      const newResources = Object.entries(warehouseCopy.resources).reduce((accumulator, [resourceId, resource]) => {
+      const resources = {...warehouseCopy.resources};
+
+      // Add each resource and add it to the warehouse if not already added
+      Object.keys(Resources).forEach(resourceId => {
+        if (!resources.hasOwnProperty(resourceId)) {
+          resources[resourceId] = {...initResourceState, id: resourceId};
+        }
+      });
+
+      // go through each resource and add the decorator, because I don't wanna copy and paste it a billion times
+      const newResources = Object.entries(resources).reduce((accumulator, [resourceId, resource]) => {
         const newResource = Object.assign({}, resource, resourceDecorations);
         accumulator[resourceId] = newResource;
         return accumulator;
-      }, {});
+      }, resources);
       warehouseCopy.resources = newResources;
       return warehouseCopy;
     }

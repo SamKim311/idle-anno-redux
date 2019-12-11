@@ -10,7 +10,7 @@ const Traders = {
         buy: .5,
         sell: 1.2
       },
-      stonebrick: {
+      stone: {
         buy: .5,
         sell: 1.2
       },

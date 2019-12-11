@@ -49,26 +49,79 @@ const PopulationDefinitions = {
       },
       cider: {
         quantity: .44,
-        weight: 20
+        weight: 16
       },
       linen: {
         quantity: 0.42,
-        weight: 20
+        weight: 16
       },
       community: {
         quantity: 1,
-        weight: 20
+        weight: 16
       },
       faith: {
         quantity: 1,
-        weight: 20
+        weight: 16
+      },
+      entertainment: {
+        quantity: 1,
+        weight: 16
       }
     }
   },
   patrician: {
     name: 'Patrician',
     taxRate: 1.05,
-    consumes: {}
+    consumes: {
+      fish: {
+        quantity: .22,
+        weight: 2.8
+      },
+      spice: {
+        quantity: .22,
+        weight: 4.9
+      },
+      bread: {
+        quantity: .55,
+        weight: 6.3
+      },
+      cider: {
+        quantity: .23,
+        weight: 4
+      },
+      ale: {
+        quantity: .24,
+        weight: 9
+      },
+      linen: {
+        quantity: .19,
+        weight: 4.5
+      },
+      leather: {
+        quantity: .28,
+        weight: 8.5
+      },
+      community: {
+        quantity: 1,
+        weight: 12
+      },
+      faith: {
+        quantity: 1,
+        weight: 12
+      },
+      entertainment: {
+        quantity: 1,
+        weight: 12
+      },
+      book: {
+        quantity: .16,
+        weight: 12
+      },
+      security: {
+        quantity: 1,
+        weight: 12
+      }
+    }
   },
   noble: {
     name: 'Noble',

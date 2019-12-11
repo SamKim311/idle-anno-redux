@@ -49,7 +49,8 @@ export default function(state = {}, action) {
       return {...state, couriers: courierState};
     }
     case warehouseActions.UPDGRADE_WAREHOUSE: {
-      const nextWarehouse = BuildingDefinitions[payload.toUpgrade].upgradesTo;
+      const nextWarehouseId = BuildingDefinitions[payload.toUpgrade].upgradesTo;
+      const nextWarehouse = BuildingDefinitions[nextWarehouseId];
       const courierList = [...state.couriers.couriers];
       addCouriers(courierList, nextWarehouse.couriers);
       const courierState = {...state.couriers, couriers: courierList};

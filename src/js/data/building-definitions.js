@@ -522,6 +522,22 @@ const BuildingDefinitions = {
     category: BUILDING_CATEGORY.WAREHOUSE,
     upkeep: 15,
     couriers: 1,
+    capacity: 10,
+    upgradesTo: 'largewarehouse',
+    upgradeCost: {
+      gold: 350,
+      wood: 2,
+      tool: 1,
+      stone: 3,
+      glass: 2
+    }
+  },
+  largewarehouse: {
+    name: 'Large Warehouse',
+    description: 'Large Warehouse',
+    category: BUILDING_CATEGORY.WAREHOUSE,
+    upkeep: 20,
+    couriers: 1,
     capacity: 10
   },
   smallstockpile: {
@@ -547,6 +563,23 @@ const BuildingDefinitions = {
     category: BUILDING_CATEGORY.WAREHOUSE,
     upkeep: 20,
     couriers: 2,
+    capacity: 5,
+    upgradesTo: 'largestockpile',
+    upgradeCost: {
+      gold: 300,
+      wood: 3,
+      tool: 1,
+      stone: 3,
+      glass: 2
+    }
+  },
+  largestockpile: {
+    name: 'Large Stockpile',
+    abbreviation: 'LS',
+    description: 'Large depot. Provides 3 couriers, and 10 storage',
+    category: BUILDING_CATEGORY.WAREHOUSE,
+    upkeep: 30,
+    couriers: 3,
     capacity: 5
   },
   smallstorehouse: {

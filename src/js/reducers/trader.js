@@ -49,11 +49,7 @@ export default function(trader=INIT_STATE, action) {
       }
       return newState;
     case ACTIONS.DISMISS_TRADER: {
-      const newState = {...trader};
-      newState.traderId = 0;
-      newState.wares = {};
-      newState.time = 0;
-      newState.timeToLeave = BASE_TRADER_VACANCY_TIME_SECONDS;
+      const newState = newTrader(trader);
       return newState;
     }
     default:
@@ -61,7 +57,17 @@ export default function(trader=INIT_STATE, action) {
   }
 };
 
-function newTrader(currentState) { // atm, more like "restock goods"
+function newTrader(currentState) {
+  if (currentState.traderId !== 0) {
+    const newState = {...currentState};
+    newState.traderId = 0;
+    newState.wares = {};
+    newState.time = 0;
+    newState.timeToLeave = BASE_TRADER_VACANCY_TIME_SECONDS;
+
+    return newState;
+  }
+
   const traders = Object.keys(Traders);
   let selectedTrader = traders[Math.floor(Math.random() * traders.length)];
   if (currentState.newGame) {

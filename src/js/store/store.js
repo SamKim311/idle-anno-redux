@@ -5,10 +5,12 @@ import INITIAL_STATE from './initial-state';
 
 export default function configureStore(initialState=INITIAL_STATE) {
   const saveState = localStorage.getItem('save');
+  let loaded = false;
   if (saveState) {
     initialState = JSON.parse(atob(saveState));
+    loaded = true;
   }
-  if (!initialState) {
+  if (!loaded) {
     initialState = rootReducer(null, {type: 'RESET_SAVE'});
   }
   return createStore(

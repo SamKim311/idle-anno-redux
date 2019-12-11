@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { tick as dispatchTick, saveGame } from './actions/game';
 import Scheduler from './scheduler';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 
 import IslandNameView from './components/IslandNameView';
 import TimeFactor from './components/cheats/TimeFactor';
@@ -38,17 +40,29 @@ function Game() {
 
   return (
     <div className="game">
-      <SaveLoad></SaveLoad>
-      <TimeFactor></TimeFactor>
       <IslandNameView></IslandNameView>
       <MilestonePane></MilestonePane>
-      <ResourcePanel></ResourcePanel>
-      <TradePanel></TradePanel>
-      <PopulationPanel></PopulationPanel>
-      <HousingPanel></HousingPanel>
-      <CourierMonitor></CourierMonitor>
-      <ConstructionPanel></ConstructionPanel>
-      <BuildingPanel></BuildingPanel>
+      <Tabs defaultActiveKey='buildings'>
+        <Tab eventKey='buildings' title='Buildings'>
+          <ConstructionPanel></ConstructionPanel>
+          <BuildingPanel></BuildingPanel>
+        </Tab>
+        <Tab eventKey='resources' title='Resources'>
+          <ResourcePanel></ResourcePanel>
+          <CourierMonitor></CourierMonitor>
+        </Tab>
+        <Tab eventKey='population' title='Houses'>
+          <PopulationPanel></PopulationPanel>
+          <HousingPanel></HousingPanel>
+        </Tab>
+        <Tab eventKey='port' title='Port'>
+          <TradePanel></TradePanel>
+        </Tab>
+        <Tab eventKey='settings' title='Settings'>
+          <SaveLoad></SaveLoad>
+          <TimeFactor></TimeFactor>
+        </Tab>
+      </Tabs>
     </div>
   );
 }

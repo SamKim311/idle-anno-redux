@@ -15,7 +15,7 @@ const PopulationDefinitions = {
   },
   peasant: {
     name: 'Peasant',
-    taxRate: 0.8,
+    taxRate: 0.96,
     consumes: {
       community: {
         quantity: 1,
@@ -37,7 +37,7 @@ const PopulationDefinitions = {
   },
   citizen: {
     name: 'Citizen',
-    taxRate: 0.95,
+    taxRate: 1.14,
     consumes: {
       fish: {
         quantity: .4,
@@ -71,7 +71,7 @@ const PopulationDefinitions = {
   },
   patrician: {
     name: 'Patrician',
-    taxRate: 1.05,
+    taxRate: 1.26,
     consumes: {
       fish: {
         quantity: .22,
@@ -125,7 +125,7 @@ const PopulationDefinitions = {
   },
   noble: {
     name: 'Noble',
-    taxRate: 1.15,
+    taxRate: 1.38,
     consumes: {}
   }
 };

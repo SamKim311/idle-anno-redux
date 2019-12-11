@@ -16,8 +16,8 @@ const IslandNameView = () => {
 
   return (
     <div className='title'>
-      <h2>{name} <button onClick={changeFn}>Change Name</button></h2>
-      <h4>{title}</h4>
+      <h4>The {title} of {name}</h4>
+      <button onClick={changeFn}>Change Name</button>
     </div>
   )
 };

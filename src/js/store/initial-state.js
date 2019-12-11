@@ -2,7 +2,7 @@ const INITIAL_STATE = {
   island: {
     level: 1,
     title: 'Small Settlement',
-    name: 'New Island'
+    name: 'Townsville'
   },
   construction: {
     peasanthouse: {

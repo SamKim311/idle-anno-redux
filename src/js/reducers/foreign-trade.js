@@ -170,7 +170,7 @@ export default function (state = INITIAL_STATE, action) {
       return {...state, cargoUsed: cargoUsed, toLoad: toLoad, toUnload: toUnload, cargo: cargo, inventory: inventory, balance: balance};
     }
     case ACTIONS.CANCEL: {
-      return state.backupState;
+      return {...state.backupState, backupState: {}};
     }
     case ACTIONS.CONFIRM: {
       return {...state, toLoad: {}, toUnload: {}, balance: 0};
@@ -212,14 +212,22 @@ function calculateWarehouseMax(playerLevel) {
   return 30 + ((playerLevel-1) * 10);
 }
 
+const INVENTORY_FACTOR = 1 / 1.25;
 function setUpInventory(islandInfo, warehouseMax) {
   return Object.entries(islandInfo.rates).reduce((inventory, [itemId, rates]) => {
     if (rates[1] > 0) {
       if (Resources.hasOwnProperty(itemId)) {
         const sellPrice = Resources[itemId].baseTradePrice * rates[1];
         inventory[itemId] = {
-          onHand: warehouseMax,
+          onHand: warehouseMax * rates[1] * INVENTORY_FACTOR,
           sellPrice: sellPrice
+        };
+      }
+    } else {
+      if (Resources.hasOwnProperty(itemId)) {
+        inventory[itemId] = {
+          onHand: 0,
+          sellPrice: 0
         };
       }
     }
@@ -229,7 +237,7 @@ function setUpInventory(islandInfo, warehouseMax) {
 
 function setUpHomeInventory(homeResources) {
   return Object.entries(homeResources).reduce((inventory, [itemId, item]) => {
-    if (item.owned > 0 && item.id !== 'gold') {
+    if (item.id !== 'gold') {
       inventory[itemId] = {
         onHand: item.owned
       };

@@ -130,10 +130,36 @@ export default function(warehouse = {}, action) {
     case foreignTradeActions.CONFIRM: {
       const balance = payload.cost;
 
+      const resources = {...warehouse.resources};
+
       const gold = {...warehouse.resources.gold};
       gold.owned += balance;
 
-      return {...warehouse, resources: {...warehouse.resources, gold: gold}};
+      const toLoad = payload.toLoad;
+      Object.entries(toLoad).forEach(([resourceId, amount]) => {
+        if (!resources[resourceId]) {
+          console.error(resourceId + ' not found in the warehouse');
+          return;
+        }
+
+        const resource = {...resources[resourceId]};
+        resource.owned -= amount;
+        resources[resourceId] = resource;
+      });
+
+      const toUnload = payload.toUnload;
+      Object.entries(toUnload).forEach(([resourceId, amount]) => {
+        if (!resources[resourceId]) {
+          console.error(resourceId + ' not found in the warehouse');
+          return;
+        }
+
+        const resource = {...resources[resourceId]};
+        resource.owned += amount;
+        resources[resourceId] = resource;
+      });
+
+      return {...warehouse, resources: resources};
     }
     default:
       return warehouse;

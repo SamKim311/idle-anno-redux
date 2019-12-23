@@ -12,8 +12,8 @@ import { filterUnlocked } from '../selectors';
 import { onload, offload, cancel, confirm } from '../actions/foreign-trade';
 
 const DockModal = (props) => {
-  const [dockSelected, setDockSelected] = useState('wood');
-  const [shipSelected, setShipSelected] = useState('wood');
+  const [dockSelected, setDockSelected] = useState('');
+  const [shipSelected, setShipSelected] = useState('');
   const traderInfo = useSelector(state => state.foreignTrade);
   const resources = useSelector(state => filterUnlocked(state.warehouse.resources)); // literally just for unlocked state
   const gold = useSelector(state => state.warehouse.resources.gold.owned);
@@ -22,7 +22,7 @@ const DockModal = (props) => {
   const islandData = Islands[fleet.currentLocation];
 
   const dockGoods = Object.entries(traderInfo.inventory).map(([resourceId, sellData]) => {
-    if (resources[resourceId]) {
+    if (resources[resourceId] && sellData.onHand > 0) {
       return <option key={resourceId} value={resourceId}>{Resources[resourceId].name} -- {sellData.onHand.toFixed()}</option>;
     }
   });

@@ -25,9 +25,15 @@ export default function (state = INITIAL_STATE, action) {
       const cargoUsed = Object.values(cargoManifest).reduce((sum, cargo) => sum + cargo, 0);
       if (payload.dockId === state.dockId) {
         // visiting the same dock consecutively, just update the ships (just in case)
+        let inventory = state.inventory;
+        if (payload.dockId === 'home') {
+          // update inventory too
+          const warehouseInfo = payload.warehouse;
+          inventory = setUpHomeInventory(warehouseInfo.resources);
+        }
         return {
           ...state,
-
+          inventory: inventory,
           cargoMaximum: cargoCapacity,
           cargo: cargoManifest,
           cargoUsed: cargoUsed,

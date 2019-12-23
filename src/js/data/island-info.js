@@ -112,16 +112,16 @@ const Islands = {
 
 export const travelTimes = {
   home: {
-    duloc: 500,
-    agrabah: 800
+    duloc: 300,
+    agrabah: 500
   },
   duloc: {
-    home: 500,
-    agrabah: 300
+    home: 300,
+    agrabah: 200
   },
   agrabah: {
-    home: 800,
-    duloc: 300
+    home: 500,
+    duloc: 200
   }
 };
 

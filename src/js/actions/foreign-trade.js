@@ -22,6 +22,6 @@ export function cancel() {
   return { type: ACTIONS.CANCEL };
 }
 
-export function confirm(fleetId, toLoad, toUnload, cost) {
-  return { type: ACTIONS.CONFIRM, payload: { fleetId: fleetId, toLoad: toLoad, toUnload: toUnload, cost: cost}};
+export function confirm(fleetId, dockId, toLoad, toUnload, cost) {
+  return { type: ACTIONS.CONFIRM, payload: { fleetId: fleetId, dockId: dockId, toLoad: toLoad, toUnload: toUnload, cost: cost}};
 }

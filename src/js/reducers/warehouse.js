@@ -132,32 +132,35 @@ export default function(warehouse = {}, action) {
 
       const resources = {...warehouse.resources};
 
-      const gold = {...warehouse.resources.gold};
+      const gold = {...resources.gold};
+      resources.gold = gold;
       gold.owned += balance;
 
-      const toLoad = payload.toLoad;
-      Object.entries(toLoad).forEach(([resourceId, amount]) => {
-        if (!resources[resourceId]) {
-          console.error(resourceId + ' not found in the warehouse');
-          return;
-        }
-
-        const resource = {...resources[resourceId]};
-        resource.owned -= amount;
-        resources[resourceId] = resource;
-      });
-
-      const toUnload = payload.toUnload;
-      Object.entries(toUnload).forEach(([resourceId, amount]) => {
-        if (!resources[resourceId]) {
-          console.error(resourceId + ' not found in the warehouse');
-          return;
-        }
-
-        const resource = {...resources[resourceId]};
-        resource.owned += amount;
-        resources[resourceId] = resource;
-      });
+      if (payload.dockId === 'home') {
+        const toLoad = payload.toLoad;
+        Object.entries(toLoad).forEach(([resourceId, amount]) => {
+          if (!resources[resourceId]) {
+            console.error(resourceId + ' not found in the warehouse');
+            return;
+          }
+  
+          const resource = {...resources[resourceId]};
+          resource.owned -= amount;
+          resources[resourceId] = resource;
+        });
+  
+        const toUnload = payload.toUnload;
+        Object.entries(toUnload).forEach(([resourceId, amount]) => {
+          if (!resources[resourceId]) {
+            console.error(resourceId + ' not found in the warehouse');
+            return;
+          }
+  
+          const resource = {...resources[resourceId]};
+          resource.owned += amount;
+          resources[resourceId] = resource;
+        });
+      }
 
       return {...warehouse, resources: resources};
     }

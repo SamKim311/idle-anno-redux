@@ -52,7 +52,7 @@ const DockModal = (props) => {
   }
 
   const confirmTrade = () => {
-    dispatch(confirm(fleet.id, traderInfo.toLoad, traderInfo.toUnload, traderInfo.balance));
+    dispatch(confirm(fleet.id, traderInfo.dockId, traderInfo.toLoad, traderInfo.toUnload, traderInfo.balance));
     props.onClose();
   }
 

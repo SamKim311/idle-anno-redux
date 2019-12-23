@@ -77,8 +77,8 @@ export default function (state = INITIAL_STATE, action) {
       }
       const availableCargo = state.cargoMaximum - state.cargoUsed;
       const availableOnhand = state.inventory[resource].onHand;
-      amount = Math.min(amount, availableCargo, availableOnhand);
-      if (isNaN(amount)) {
+      amount = Math.floor(Math.min(amount, availableCargo, availableOnhand));
+      if (isNaN(amount) || amount < 1) {
         return state;
       }
 
@@ -130,8 +130,8 @@ export default function (state = INITIAL_STATE, action) {
         amount = state.cargo[resource];
       }
       const availableWarehouse = state.warehouseMaximum - state.inventory[resource].onHand;
-      amount = Math.min(amount, availableWarehouse, state.cargo[resource]);
-      if (isNaN(amount)) {
+      amount = Math.floor(Math.min(amount, availableWarehouse, state.cargo[resource]));
+      if (isNaN(amount) || amount < 1) {
         return state;
       }
 

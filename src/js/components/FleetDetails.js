@@ -39,6 +39,12 @@ const FleetDetails = (props) => {
     setShowDockModal(false);
   }
 
+  const timeRemainingToReadable = (timeRemaining) => {
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = (timeRemaining % 60).toFixed();
+    return minutes + ":" + seconds;
+  }
+
   const destinationName = fleet.currentDestination ? fleet.currentDestination === 'home' ? homeName : Islands[fleet.currentDestination].name : null;
   const currentLocationName = fleet.currentDestination ? 'sea towards ' + destinationName :
                           fleet.currentLocation === 'home' ? homeName :
@@ -90,7 +96,7 @@ const FleetDetails = (props) => {
         <Row>
           <Col>
             This fleet is currently at {currentLocationName} <br />
-            {timeRemaining ? 'Time remaining: ' + timeRemaining : ''} <br />
+            {timeRemaining ? 'Time remaining: ' + timeRemainingToReadable(timeRemaining) : ''} <br />
             {dockOption}
           </Col>
         </Row>

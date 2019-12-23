@@ -3,6 +3,7 @@ import { ACTIONS as gameActions } from '../actions/game';
 import { ACTIONS as constructionActions } from '../actions/construction';
 import { ACTIONS as housingActions } from '../actions/housing';
 import { ACTIONS as tradeActions } from '../actions/trade';
+import { ACTIONS as foreignTradeActions } from '../actions/foreign-trade';
 import BuildingDefinitions from '../data/building-definitions';
 import Resources from '../data/resource-definitions';
 
@@ -125,6 +126,14 @@ export default function(warehouse = {}, action) {
 
       const resources = {...warehouse.resources, gold: gold, [good]: goodBought};
       return {...warehouse, resources: resources};
+    }
+    case foreignTradeActions.CONFIRM: {
+      const balance = payload.cost;
+
+      const gold = {...warehouse.resources.gold};
+      gold.owned += balance;
+
+      return {...warehouse, resources: {...warehouse.resources, gold: gold}};
     }
     default:
       return warehouse;

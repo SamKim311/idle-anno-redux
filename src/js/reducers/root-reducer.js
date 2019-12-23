@@ -14,6 +14,8 @@ import finance from './finance';
 import levelUp from './level-up';
 import cheat from './cheat';
 import trader from './trader';
+import navy from './navy';
+import foreignTrade from './foreign-trade';
 import INITIAL_STATE from '../store/initial-state';
 
 const combinedReducer = combineReducers({
@@ -25,7 +27,9 @@ const combinedReducer = combineReducers({
   couriers: (state = {}) => { return state }, // no op
   housing: housing,
   population: population,
-  trader: trader
+  trader: trader,
+  navy: navy,
+  foreignTrade: foreignTrade
 });
 
 function rootReducer(state, action) {

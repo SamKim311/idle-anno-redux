@@ -16,6 +16,7 @@ import HousingPanel from './components/HousingPanel';
 import SaveLoad from './components/SaveLoad';
 import TradePanel from './components/TradePanel';
 import MilestonePane from './components/MilestonePane';
+import FleetView from './components/FleetView';
 
 const MS_TO_S = 1/1000.0;
 
@@ -57,6 +58,7 @@ function Game() {
         </Tab>
         <Tab eventKey='port' title='Port'>
           <TradePanel></TradePanel>
+          <FleetView></FleetView>
         </Tab>
         <Tab eventKey='settings' title='Settings'>
           <SaveLoad></SaveLoad>

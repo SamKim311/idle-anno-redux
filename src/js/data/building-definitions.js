@@ -2,7 +2,12 @@ export const BUILDING_CATEGORY = {
   AMENITY: 'AMENITY',
   PRODUCER: 'PRODUCER',
   HOUSE: 'HOUSE',
-  WAREHOUSE: 'WAREHOUSE'
+  WAREHOUSE: 'WAREHOUSE',
+  NAVAL: 'NAVAL'
+}
+
+export const BUILDING_SUB_CATEGORY = {
+  SHIPYARD: 'SHIPYARD'
 }
 
 export const buildingStatus = {
@@ -595,15 +600,25 @@ const BuildingDefinitions = {
   // Shipyard
   smallshipyard: {
     name: 'Small Shipyard',
-    description: 'Doesn\'t do anything yet!'
+    description: 'Allows construction of small ships',
+    category: BUILDING_CATEGORY.NAVAL,
+    subCategory: BUILDING_SUB_CATEGORY.SHIPYARD,
+    upkeep: 10,
+    shipsBuilt: ['smalltrader', 'smallwarship']
   },
   largeshipyard: {
     name: 'Large Shipyard',
-    description: 'Doesn\'t do anything yet!'
+    description: 'Allows construction of large vessels',
+    category: BUILDING_CATEGORY.NAVAL,
+    subCategory: BUILDING_SUB_CATEGORY.SHIPYARD,
+    upkeep: 20,
+    shipsBuilt: ['largetrader', 'largewarship']
   },
   repaircrane: {
     name: 'Repair Crane',
-    description: 'Doesn\'t do anything yet!'
+    description: 'Repairs ships that are docked here',
+    category: BUILDING_CATEGORY.NAVAL,
+    upkeep: 20
   }
 };
 
